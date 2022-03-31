@@ -98,7 +98,6 @@
 
 
 
-<div *ngIf="isAdmin">
 <h3>
   Edit events
   <button class="btn btn-primary float-right" (click)="addEvent()">
@@ -112,11 +111,9 @@
     <thead>
       <tr>
         <th>Title</th>
-        <!-- <th>Primary color</th>
-        <th>Secondary color</th> -->
         <th>Starts at</th>
         <th>Ends at</th>
-        <th>Remove</th>
+        <th colspan="2">Action</th>        
       </tr>
     </thead>
 
@@ -130,20 +127,7 @@
             (keyup)="refresh.next()"
           />
         </td>
-        <!-- <td>
-          <input
-            type="color"
-            [(ngModel)]="event.color.primary"
-            (change)="refresh.next()"
-          />
-        </td>
-        <td>
-          <input
-            type="color"
-            [(ngModel)]="event.color.secondary"
-            (change)="refresh.next()"
-          />
-        </td> -->
+        
         <td>
           <input
             class="form-control"
@@ -179,13 +163,16 @@
             Delete
           </button>
         </td>
+        <td>
+          <button class="btn btn-primary active" (click)="saveEvents(event)">
+            Save
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
-</div>
 
-<button class="btn btn-primary float-right">Add Data</button>
 
 
 <ng-template #modalContent let-close="close">
