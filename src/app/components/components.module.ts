@@ -38,7 +38,6 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-//import { CalendarHeaderComponent } from './calendar/calendar-header.component';
 //End
 
 
@@ -69,9 +68,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     VmDetailsComponent,
     AddVmComponent,
     ResetPasswordComponent,
-    //add changes
-    //CalendarHeaderComponent,   
-    //end
+   
   ],
   imports: [
     CommonModule,
@@ -108,9 +105,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     ManageUsersComponent,
     UserDetailComponent,
     CalendarComponent,
-    //add changes
-   //CalendarHeaderComponent,
-    //end
+   
   ]
 })
 export class ComponentsModule { }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-
 //Add Changes
 import {
  // Component,
@@ -9,11 +8,6 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-
-
-
-
-
 import {
   startOfDay,
   endOfDay,
@@ -117,7 +111,7 @@ export class CalendarComponent implements OnInit {
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
-      title: 'A 3 day event',
+      title: 'Ramjan',
       color: colors.red,
       actions: this.actions,
       allDay: true,
@@ -129,15 +123,17 @@ export class CalendarComponent implements OnInit {
     },
     {
       start: startOfDay(new Date()),
-      title: 'An event with no end date',
+      title: 'Republic Day',
       color: colors.yellow,
       actions: this.actions,
     },
     {
       
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      // start: subDays(endOfMonth(new Date()), 3),
+      // end: addDays(endOfMonth(new Date()), 3),
+      start: subDays(endOfMonth(new Date()), 0),
+      end: addDays(endOfMonth(new Date()), 0),
+      title: 'Bhogi',
       color: colors.blue,
       allDay: true,
     },
@@ -238,6 +234,5 @@ export class CalendarComponent implements OnInit {
   // onBack(): void {
   //   this._router.navigate(['/flexy/home']);
   // }
-
   
 }
