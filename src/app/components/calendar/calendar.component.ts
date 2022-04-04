@@ -196,6 +196,7 @@ export class CalendarComponent implements OnInit {
   constructor(private _router: Router,private CalenderService : CelenderServiceService) { }
   ngOnInit(): void {  
     this.fetchData();
+   
 } 
 
   ngOnChanges(): void {
@@ -206,6 +207,7 @@ export class CalendarComponent implements OnInit {
   delete(id: string) {
     this.CalenderService.deletePolicy(id);
     this.fetchData();    
+    alert('The events was Deleted');
   } 
 update(cal: Calinfo) {
   this.CalenderService.updatePolicy(cal);
@@ -216,7 +218,7 @@ fetchData() {
  
     this.eventsList = data.map(e => {
       //alert(this.eventsList.id);
-      return {     
+      return {   
       
         id: e.payload.doc.id,      
         title:e.payload.doc.get("title"),

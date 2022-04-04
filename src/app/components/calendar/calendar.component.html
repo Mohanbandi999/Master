@@ -171,6 +171,7 @@
 
 <h3>
   Edit events
+ 
   <button class="btn btn-primary float-right" (click)="addEvent()">
     Add new
   </button>
@@ -188,10 +189,38 @@
   </thead>
   <tbody>
     <tr *ngFor="let event of eventsList" >
-
-      <td>{{event.title}}</td>
+      <td><input
+        type="text"
+        class="form-control"
+        [(ngModel)]="event.title"         
+      /></td>
+     
+        <td>
+          <input            
+          class="form-control"
+          type="text" name="startdate"
+          [(ngModel)]="event.start"       
+        
+        /> 
+        </td>
+        <td>
+          <input            
+          class="form-control"
+          type="text" name="startdate"
+          mwlFlatpickr
+              [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()"
+              [altInput]="true"
+              [convertModelValue]="true"
+              [enableTime]="true"
+              dateFormat="Y-m-dTH:i"
+              altFormat="F j, Y H:i"
+              placeholder="Not set"
+        /> 
+        </td>
+      <!-- <td>{{event.title}}</td>
       <td>{{event.start}}</td>
-      <td>{{event.end}}</td>
+      <td>{{event.end}}</td> -->
       <!-- <td>{{event.id}}</td> -->
       <td>
           <button class="btn btn-primary active" (click)="saveEvents(event)">Save</button></td>
