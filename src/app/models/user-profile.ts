@@ -2,23 +2,26 @@ import { AppRoutingModule } from "../app-routing.module";
 
 export interface ProfileUser {
     uid?: string;
-    email?: string;
     firstName?: string;
-    
-    doj?:string;
-    dob?:string;
-    photoURL?:string;
-    emailVerified?: boolean;
     lastName?: string;
+    dob?:string;
+    phone?: string;
+    email?: string;
+    officeEmail?:string;
+    doj?:string;
+    designation?:string;
+    project?:string;
+    address?: string;
+    skillSet?:Array<string>;
+    photoURL?:string;
     
+    // internal use properties
+    emailVerified?: boolean;    
     password?:string;
     confirmPassword?:string;
-
     displayName?: string;
     gender?:string;
-    hiredate?:string;
+    //hiredate?:string;
     role?:string;
-    phone?: string;
-    address?: string;
-
+    isActive?:boolean;
   }

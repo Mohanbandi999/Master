@@ -24,6 +24,7 @@ export class FullComponent {
   search: boolean = false;
   selectedUser:any;
   userIcon:string = "";
+  isAdmin:boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -33,10 +34,9 @@ export class FullComponent {
     user$ = this.afAuth.user;
   constructor(private _router: Router, private breakpointObserver: BreakpointObserver,
     public authService: AuthenticationService,public userService:UserService,public afAuth: AngularFireAuth) {
-      //this.getAllUser();
-      debugger
       this.userName = this.userService.selectedUser?.firstName;
-      this.sidebarMenu = this.userService.selectedUser?.role == "1" ? this.adminSideBarMenu : this.userSideBarMenu;
+      this.isAdmin = this.userService.selectedUser?.role == "1" ? true:false;      
+      this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
       this.userIcon = this.userService.selectedUser?.photoURL ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
     }
   
@@ -67,9 +67,9 @@ export class FullComponent {
   ]
   userSideBarMenu: sidebarMenu[] = [
     {
-      link: "/home",
-      icon: "home",
-      menu: "Dashboard",
+      link: "/user-detail",
+      icon: "layout",
+      menu: "User Details",
     },
     {
       link: "/change-password",

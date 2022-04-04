@@ -1,71 +1,88 @@
 <!-- Form Layout -->
 <div class="card">
     <div class="card-body">
-      <h4 class="mb-32">View / Delete User</h4>
+      <h4 class="mb-32">View / Edit User</h4>
+      <button mat-raised-button class="mb-16 btn btn-info" color="accent" (click)="onEdit()">Edit</button>
       
       <form [formGroup]="userService.form">
+
+        <mat-form-field class="w-100 fs-16" appearance="outline">
+          <mat-label>Employee ID</mat-label>
+          <input matInput type="text" value="User" placeholder="Employee ID" [value]="userService.selectedUser.uid" readonly>
+        </mat-form-field>
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" value="User" placeholder="Enter user's name" formControlName="firstName" readonly>
+          <input matInput type="text" value="User" placeholder="Enter user's first name" [value]="userService.selectedUser.firstName" [readonly]="isAdminEdit">
+        </mat-form-field>
+        
+        <mat-form-field class="w-100 fs-16" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" value="User" placeholder="Enter user's last name" [value]="userService.selectedUser.lastName" [readonly]="!isAdminEdit">
+        </mat-form-field>
+        
+        <mat-form-field class="w-100 fs-16" appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="date" placeholder="Date of Birth" [value]="userService.selectedUser.dob" [readonly]="!isEdit">
         </mat-form-field>
 
-        
+        <mat-form-field class="w-100 fs-16" appearance="outline">
+          <mat-label>Contact Number</mat-label>
+          <input matInput type="email" placeholder="Enter Contact Number" [readonly]="!isEdit">
+        </mat-form-field>
   
         <mat-form-field class="w-100 fs-16" appearance="outline">
-          <mat-label>Personal Email</mat-label>
-          <input matInput type="email" placeholder="Enter user's personal email"  formControlName="email" readonly>
+          <mat-label>Personal Mail</mat-label>
+          <input matInput type="email" placeholder="Enter user's personal email"  [value]="userService.selectedUser.email" [readonly]="!isEdit">
         </mat-form-field>
         
+        <mat-form-field class="w-100 fs-16" appearance="outline">
+          <mat-label>Official Mail</mat-label>
+          <input matInput type="email" placeholder="Enter company email" [readonly]="!isEdit">
+        </mat-form-field>
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
-            <mat-label>Birth Date (DOB)</mat-label>
-            <input matInput type="date" placeholder="Date of Birth"  formControlName="dob" readonly>
-          </mat-form-field>
-        
-        <mat-form-field class="w-100 fs-16" appearance="outline">
-            <mat-label>Joining Date (DOJ)</mat-label>
-            <input matInput  type="date" placeholder="Date of Joining" formControlName="doj" readonly>
-          </mat-form-field>
-          
-        <mat-form-field class="w-100 fs-16" appearance="outline">
-            <mat-label>User ID</mat-label>
-            <input matInput type="text" disabled placeholder="User ID" value="SB004V1" readonly>
+            <mat-label>Date of Joining</mat-label>
+            <input matInput  type="date" placeholder="Date of Joining" [value]="userService.selectedUser.doj" [readonly]="!isEdit">
           </mat-form-field>
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
-              <mat-label>User Designation</mat-label>
-              <input matInput type="text" disabled placeholder="User Role / Designation" value="Software Engineer" >
-            </mat-form-field>
+              <mat-label>Designation</mat-label>
+              <input matInput type="text" placeholder="User Designation">
+            </mat-form-field>            
 
-          <section class="fs-16">
-            <!-- <mat-checkbox color="primary" [checked]="checked" (change)="onCheck()" class="d-block mb-16">Generate Company Email</mat-checkbox> -->
-            <mat-form-field class="w-100" appearance="outline">
-                <mat-label>Company Email Format</mat-label>
-                <input matInput type="uid" disabled placeholder="Enter Company Email Format" value="user@softblobs.com">
-              </mat-form-field>
-          </section>
+          <mat-form-field class="w-100 fs-16" appearance="outline">
+            <mat-label>Project</mat-label>
+            <input matInput type="text" placeholder="Project">
+          </mat-form-field>          
   
         <mat-form-field class="w-100 fs-16" appearance="outline">
-          <mat-label>More Details</mat-label>
-          <textarea matInput disabled rows="6" placeholder="Enter more information about the user" value="Verified, added by Admin"></textarea>
+          <mat-label>Address for Communication</mat-label>
+          <textarea matInput [readonly]="!isEdit" rows="5" placeholder="Address for Communication"></textarea>
         </mat-form-field>
-<!--         
-        <mat-radio-group color="primary" class="fs-16" aria-label="Select an option">
-          <mat-label class="text-secondary">Gender</mat-label>
-          <mat-radio-button value="1" class="mt-8 mb-16 d-block" [checked]="checked">Female</mat-radio-button>
-          <mat-radio-button value="2" class="d-block mb-16">Male</mat-radio-button>
-          <mat-radio-button value="3" class="d-block mb-36">Other</mat-radio-button>
-        </mat-radio-group> -->
+
+        <mat-form-field class="w-100 fs-16 demo-chip-list">
+          <mat-label>Skill Set</mat-label>
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let skill of userSkillSet" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(skill)">
+              {{skill.name}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Add new Skill Set..." [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)" />
+          </mat-chip-list>
+        </mat-form-field>
         
         <section class="fs-16 mb-16">
             <mat-label>Uploaded Photos / Documents</mat-label>    
             <div *ngIf="photoURL != null"><img [src]="photoURL" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>         
         </section>
           
-        <button mat-raised-button class="mb-16 btn btn-info" (click)="onEdit()">Update User Details</button>
+        <button *ngIf="isEdit" mat-raised-button class="mb-16 btn btn-info" (click)="updateUser()">Update User Details</button>
         &nbsp;
-      <button mat-raised-button right class="me-8 mb-8" color="warn">Delete User</button>
+        <!-- <button mat-raised-button right class="me-8 mb-8" color="warn">Delete User</button> -->
 
       </form>
     </div>

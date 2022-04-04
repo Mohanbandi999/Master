@@ -7,6 +7,7 @@ import {AngularFirestore,AngularFirestoreDocument} from '@angular/fire/compat/fi
 import { map, finalize } from "rxjs/operators";
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ProfileUser } from 'src/app/models/user-profile';
 import {  
   AbstractControl,
   FormControl,
@@ -46,7 +47,17 @@ export class AddUserComponent implements OnInit {
   downloadURL:Observable<string> | undefined;
   checked = true;  
   hide = true;
-  
+
+  ud: ProfileUser = {
+    email: '',
+    password: this.password,
+    firstName:'',
+    lastName:'',
+    doj:'',
+    dob:'',
+    photoURL:'',
+    role:'',
+  };
 
 
   
@@ -162,8 +173,10 @@ export class AddUserComponent implements OnInit {
     
     submit(){                
       
+
       this.authService.signUp(this.signUpForm.value.email, this.password,this.signUpForm.value.firstName,
-        this.signUpForm.value.lastName,this.signUpForm.value.doj, this.signUpForm.value.dob,this.photoURL,this.signUpForm.value.role)                                 
+        this.signUpForm.value.lastName,this.signUpForm.value.doj, this.signUpForm.value.dob,
+        this.photoURL,this.signUpForm.value.role)                                 
     }  
 
     

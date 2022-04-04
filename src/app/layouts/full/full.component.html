@@ -37,9 +37,9 @@
         *ngIf="isHandset$ | async">
         <i-feather name="menu" class="text-light-muted feather-base mt-n3"></i-feather>
       </button>
-      <button mat-icon-button class="ms-4 me-4" (click)="search=!search">
+      <!-- <button mat-icon-button class="ms-4 me-4" (click)="search=!search">
         <i-feather name="search" class="mt-n3 text-light-muted feather-base text-dark"></i-feather>
-      </button>
+      </button> -->
       <div class="ms-auto" *ngIf="user$ | async as user">
         <button mat-button class="fs-16 pt-4 pb-4 ps-8 pe-8 text-light-muted" [matMenuTriggerFor]="menu">
           
@@ -49,14 +49,14 @@
           <i-feather name="chevron-down" class="feather-base mt-n2"></i-feather>
         </button>
         <mat-menu #menu="matMenu" class="profile-dropdown">
-          <div class="p-16 mb-4">
+          <div class="p-16 mb-4" *ngIf="isAdmin">
             <button mat-menu-item class="fs-16" (click)="onViewAccount()">Edit Profile</button>
             <!-- <button mat-menu-item class="fs-16">Account</button> -->
             <button mat-menu-item class="fs-16" (click)="onChangePassword()">Change Password</button>
             <!-- <button mat-menu-item class="fs-16">My Settings</button> -->
           </div>
 
-          <hr>
+          <hr *ngIf="isAdmin">
 
           <div class="p-16">
             <button mat-button class="btn btn-info w-100" (click)="onLogout()">Logout</button>

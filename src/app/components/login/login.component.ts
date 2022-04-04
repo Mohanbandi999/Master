@@ -71,7 +71,13 @@ export class LoginComponent implements OnInit {
       // }
       // else
       // {
+        if(this.userService.selectedUser.role == "1")
+        {
         this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.router.navigate(['/user-detail']);
+        }
         console.log(result.user);
         
       })       
