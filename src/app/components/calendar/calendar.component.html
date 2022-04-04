@@ -68,9 +68,7 @@
     [events]="events"
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
+  
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
@@ -78,8 +76,8 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
+   
+    
   >
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
@@ -87,13 +85,86 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
+   
+   
   >
   </mwl-calendar-day-view>
 </div>
 
 <br /><br /><br />
+
+
+
+
+
+
+
+<!-- <h3>
+  Edit events
+  <button class="btn btn-primary float-right" (click)="addEvent()">
+    Add new
+  </button>
+  <div class="clearfix"></div>
+</h3>
+<div class="table-responsive">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Starts at</th>
+      <th>Ends at</th>
+      <th colspan="2">Action</th> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let event of eventsList" >
+      <td><input
+        type="text"
+        class="form-control"
+        [(ngModel)]="event.id"         
+      /></td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="event.title"         
+        />
+      </td>
+      <td>
+        <input            
+        class="form-control"
+        type="text" name="startdate"
+        [(ngModel)]="event.start"       
+      
+      /> 
+      </td>
+      <td>
+        <input            
+        class="form-control"
+        type="text" name="startdate"
+        mwlFlatpickr
+            [(ngModel)]="event.end"
+            (ngModelChange)="refresh.next()"
+            [altInput]="true"
+            [convertModelValue]="true"
+            [enableTime]="true"
+            dateFormat="Y-m-dTH:i"
+            altFormat="F j, Y H:i"
+            placeholder="Not set"
+      /> 
+      </td>
+    <td>  <button class="btn btn-danger" (click)="delete(event.id)">Delete</button></td>
+      
+      <!-- <td><button class="btn btn-danger" (click)="deleteEvent(event)">Delete</button></td> -->
+      <!-- <td><button class="btn btn-danger"  (click)="deleteBook(i, element)">Delete</button></td> -->
+      <!-- <td><button class="btn btn-primary active" (click)="saveEvents(event)">Save</button></td>
+  </tbody>
+</table>
+</div> -->
+
+
+ 
 
 
 
@@ -107,6 +178,43 @@
 </h3>
 
 <div class="table-responsive">
+<table class="table table-bordered">
+  <thead>
+    <th>title</th>
+    <th>Start At</th>
+    <th>End At</th>
+    <!-- <th>id</th> -->
+    <th colspan="2">Action</th> 
+  </thead>
+  <tbody>
+    <tr *ngFor="let event of eventsList" >
+
+      <td>{{event.title}}</td>
+      <td>{{event.start}}</td>
+      <td>{{event.end}}</td>
+      <!-- <td>{{event.id}}</td> -->
+      <td>
+          <button class="btn btn-primary active" (click)="saveEvents(event)">Save</button></td>
+          <!-- <button (click)="update(event)">update</button> -->
+        <td><button class="btn btn-danger" (click)="delete(event.id)">Delete</button></td> 
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+<!-- <h3>
+  Edit events
+  <button class="btn btn-primary float-right" (click)="addEvent()">
+    Add new
+  </button>
+  <div class="clearfix"></div>
+</h3> -->
+
+<!-- <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -118,7 +226,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let event of events">
+      <tr *ngFor="let event of events" >
         <td>
           <input
             type="text"
@@ -128,27 +236,26 @@
           />
         </td>
         
+        
         <td>
+          
+          <p>     </p>
           <input
+            
             class="form-control"
-            type="text"
-            mwlFlatpickr
+            type="text" name="startdate"
             [(ngModel)]="event.start"
-            (ngModelChange)="refresh.next()"
-            [altInput]="true"
-            [convertModelValue]="true"
-            [enableTime]="true"
-            dateFormat="Y-m-dTH:i"
-            altFormat="F j, Y H:i"
-            placeholder="Not set"
-          />
-        </td>
-        <td>
-          <input
+            (keyup)="refresh.next()"
+          /> -->
+
+
+
+          
+          <!-- <input
             class="form-control"
             type="text"
             mwlFlatpickr
-            [(ngModel)]="event.end"
+            [(ngModel)]="event.title"
             (ngModelChange)="refresh.next()"
             [altInput]="true"
             [convertModelValue]="true"
@@ -156,12 +263,39 @@
             dateFormat="Y-m-dTH:i"
             altFormat="F j, Y H:i"
             placeholder="Not set"
-          />
-        </td>
+          /> -->
+
+          
+        <!-- </td>
         <td>
-          <button class="btn btn-danger" (click)="deleteEvent(event)">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="event.end"
+            (keyup)="refresh.next()"
+          /> -->
+          <!-- <input
+            class="form-control"
+            type="text"
+            mwlFlatpickr
+            [(ngModel)]="event.title"
+            (ngModelChange)="refresh.next()"
+            [altInput]="true"
+            [convertModelValue]="true"
+            [enableTime]="true"
+            dateFormat="Y-m-dTH:i"
+            altFormat="F j, Y H:i"
+            placeholder="Not set"
+          /> -->
+        <!-- </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteEvent(event)" >
             Delete
           </button>
+
+         
+
+
         </td>
         <td>
           <button class="btn btn-primary active" (click)="saveEvents(event)">
@@ -171,31 +305,21 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
 
 
-<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      Action:
-      <!-- <pre>{{ modalData?.action }}</pre> -->
-    </div>
-    <div>
-      Event:
-      <!-- <pre>{{ modalData?.event | json }}</pre> -->
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">
-      OK
-    </button>
-  </div>
-</ng-template>
+
+
+
+
+<!-- <div> <button class="badge badge-danger mr-2" (click)="deleteTutorial()">
+  Delete
+</button></div> -->
+
+ <!-- <div>{{ events1.start | date:'dd/MM/yyyy' }}</div>  -->
+ <!-- <div>{{ events1.start?.toDate() | date}}</div> -->
+
+ 
+ <!-- <div>{{events.title}}</div>  -->
 

@@ -1,6 +1,12 @@
 export class Calinfo {    
-  caltitile: any;
-  startdae: any;
-  endate: any;
+  // caltitile: any;
+  // startdate: any;
+  // endate: any;
+
+ id?: any;
+  title?: string;
+  start?: Date;
+  end?: Date;
     
 }
+

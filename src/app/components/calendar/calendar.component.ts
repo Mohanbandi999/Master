@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter,OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {  AbstractControl,FormControl,FormGroup,ValidationErrors,ReactiveFormsModule ,Validators,
@@ -10,6 +10,8 @@ import { AngularFireList } from '@angular/fire/compat/database';
 import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
 import { Calinfo } from 'src/app/models/calender-data';
 
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { filter, from, map, Observable, of, switchMap, Timestamp } from 'rxjs';
 
 //Add Changes
 import {
@@ -18,11 +20,6 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-
-
-
-
-
 import {
   startOfDay,
   endOfDay,
@@ -75,29 +72,27 @@ const colors: any = {
   ],
   templateUrl: './calendar.component.html',
 })
-//End
+export class CalendarComponent implements OnInit { 
 
-// @Component({
-//   selector: 'app-calendar',
-//   templateUrl: './calendar.component.html',
-//   styleUrls: ['./calendar.component.scss']
-// })
-export class CalendarComponent implements OnInit {
+  @Input() tutorial?: Calinfo;
+  @Output() refreshList: EventEmitter<any> = new EventEmitter();
+  currentTutorial: Calinfo = {
+   // caltitile: '',
+    //startdate: '',
+    //endate: ''
+  };
+  message = '';
 
-  //Add Changes
-// @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+  
+  //calendars: Calinfo[];
+
+
 
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  viewDate: Date = new Date();
-
-  // modalData: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
-
+  viewDate: Date = new Date(); 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -119,54 +114,9 @@ export class CalendarComponent implements OnInit {
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
-    // {
-    //   start: subDays(startOfDay(new Date()), 1),
-    //   end: addDays(new Date(), 1),
-    //   title: 'A 3 day event',
-    //   color: colors.red,
-    //   actions: this.actions,
-    //   allDay: true,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
-    // {
-    //   start: startOfDay(new Date()),
-    //   title: 'An event with no end date',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    // },
-    // {
-      
-    //   start: subDays(endOfMonth(new Date()), 3),
-    //   end: addDays(endOfMonth(new Date()), 3),
-    //   title: 'A long event that spans 2 months',
-    //   color: colors.blue,
-    //   allDay: true,
-    // },
-    // {
-    //  // start: addHours(startOfDay(new Date()),0),
-    //   start: addHours(startOfDay(new Date().setHours(13,0,0,0)),0),
-    //   end: addHours(endOfDay(new Date()), 5050),
-    //  // end: addHours(new Date(), 11),
-       
-    //   title: 'Diwali',
-    //   color: colors.yellow,
-    //   actions: this.actions,
-    //   resizable: {
-    //     beforeStart: true,
-    //     afterEnd: true,
-    //   },
-    //   draggable: true,
-    // },
   ];
-
   activeDayIsOpen: boolean = true;
-  events1: any;
-
-  //constructor(private modal: NgbModal) {}
+  eventsList: any; 
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -201,11 +151,9 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+    
   }
-
-  addEvent(): void {
+  addEvent(): void {   
     this.events = [
       ...this.events,
       {
@@ -222,17 +170,20 @@ export class CalendarComponent implements OnInit {
       },
     ];
   }
-
-  saveEvents(eventAdd: CalendarEvent){
-    
+  saveEvents(eventAdd: CalendarEvent){    
     const data = eventAdd as unknown as Calinfo;      
-      this.CalenderService.createcalenderEvent(data);
-      
+      this.CalenderService.createcalenderEvent(data); 
+      alert('The events was inserted successfully!');
+      this.fetchData();  
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    this.events = this.events.filter((event) => event !== eventToDelete); 
+    this.fetchData();     
   }
+
+
+ 
 
   setView(view: CalendarView) {
     this.view = view;
@@ -241,30 +192,43 @@ export class CalendarComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
-  //End
-
-
+  
   constructor(private _router: Router,private CalenderService : CelenderServiceService) { }
-  
+  ngOnInit(): void {  
+    this.fetchData();
+} 
 
-  ngOnInit(): void {    
-   this.CalenderService.getcalenderEvents().subscribe(res=>{
-    let dataSourceone=res;
-    let temp =new MatTableDataSource(dataSourceone);
-    console.log(temp.data);
-    //this.customerArray=this.datasoc.data;
-    //this.events = temp.data
-    this.events1 = temp.data;
+  ngOnChanges(): void {
+    this.message = '';
+    this.currentTutorial = { ...this.tutorial };
+    this.fetchData();  
+  }  
+  delete(id: string) {
+    this.CalenderService.deletePolicy(id);
+    this.fetchData();    
+  } 
+update(cal: Calinfo) {
+  this.CalenderService.updatePolicy(cal);
+}
 
+fetchData() {
+  this.CalenderService.getPolicies().subscribe(data => {
+ 
+    this.eventsList = data.map(e => {
+      //alert(this.eventsList.id);
+      return {     
+      
+        id: e.payload.doc.id,      
+        title:e.payload.doc.get("title"),
+        start:e.payload.doc.get("start"),
+        end:e.payload.doc.get("end"),     
+      } as Calinfo;
+      
+    })
   });
-
-  }
-
-  // onBack(): void {
-  //   this._router.navigate(['/flexy/home']);
-  // }
-
-  
-
+}
   
 }
+
+  
+
