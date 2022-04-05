@@ -1,6 +1,5 @@
 import { Component, OnInit,Input,Output,EventEmitter,OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-
 import {  AbstractControl,FormControl,FormGroup,ValidationErrors,ReactiveFormsModule ,Validators,
 ValidatorFn,FormBuilder} from '@angular/forms';
 import { CelenderServiceService } from 'src/app/services/celender-service.service';
@@ -9,7 +8,6 @@ import { UserService } from 'src/app/services/user.service';
 import { AngularFireList } from '@angular/fire/compat/database';
 import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
 import { Calinfo } from 'src/app/models/calender-data';
-
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { filter, from, map, Observable, of, switchMap, Timestamp } from 'rxjs';
 
@@ -74,20 +72,6 @@ const colors: any = {
 })
 export class CalendarComponent implements OnInit { 
 
-  @Input() tutorial?: Calinfo;
-  @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentTutorial: Calinfo = {
-   // caltitile: '',
-    //startdate: '',
-    //endate: ''
-  };
-  message = '';
-
-  
-  //calendars: Calinfo[];
-
-
-
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -105,7 +89,8 @@ export class CalendarComponent implements OnInit {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
+        // this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.eventsList = this.events.filter((iEvent) => iEvent !== event);
         this.handleEvent('Deleted', event);
       },
     },
@@ -114,15 +99,17 @@ export class CalendarComponent implements OnInit {
   refresh = new Subject<void>();
 
   events: CalendarEvent[] = [
+    
   ];
   activeDayIsOpen: boolean = true;
   eventsList: any; 
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    dayClicked({ date, eventsList }: { date: Date; eventsList: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
+        eventsList.length === 0
       ) {
         this.activeDayIsOpen = false;
       } else {
@@ -137,7 +124,8 @@ export class CalendarComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
+    // this.events = this.events.map((iEvent) => {
+      this.eventsList = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
           ...event,
@@ -154,13 +142,12 @@ export class CalendarComponent implements OnInit {
     
   }
   addEvent(): void {   
-    this.events = [
-      ...this.events,
+    this.eventsList = [
+      ...this.eventsList,
       {
         title: 'New event',
         start: startOfDay(new Date(0)),
-        end: endOfDay(new Date(0)),
-        
+        end: endOfDay(new Date(0)),        
         color: colors.red,
         draggable: true,
         resizable: {
@@ -173,17 +160,14 @@ export class CalendarComponent implements OnInit {
   saveEvents(eventAdd: CalendarEvent){    
     const data = eventAdd as unknown as Calinfo;      
       this.CalenderService.createcalenderEvent(data); 
+      //this.CalenderService.createcalenderEvent(data); 
       alert('The events was inserted successfully!');
-      this.fetchData();  
+      this.ngOnInit(); 
   }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete); 
-    this.fetchData();     
-  }
-
-
- 
+  // deleteEvent(eventToDelete: CalendarEvent) {
+  //   this.events = this.events.filter((event) => event !== eventToDelete); 
+  //   this.fetchData();     
+  // }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -191,23 +175,25 @@ export class CalendarComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
-  }
-  
-  constructor(private _router: Router,private CalenderService : CelenderServiceService) { }
-  ngOnInit(): void {  
-    this.fetchData();
-   
-} 
+  }  
+  constructor(private _router: Router,private CalenderService : CelenderServiceService) {
+    //this.fetchData();
+   }
+ // ngOnInit(): void {  
+  ngOnInit():void {  
+    this.fetchData();   
+ } 
 
-  ngOnChanges(): void {
-    this.message = '';
-    this.currentTutorial = { ...this.tutorial };
+  ngOnChanges() {
+    // this.message = '';
+    // this.currentTutorial = { ...this.tutorial };
     this.fetchData();  
   }  
   delete(id: string) {
-    this.CalenderService.deletePolicy(id);
-    this.fetchData();    
+    this.CalenderService.deletePolicy(id);     
     alert('The events was Deleted');
+    this.ngOnInit();  
+     
   } 
 update(cal: Calinfo) {
   this.CalenderService.updatePolicy(cal);
@@ -218,18 +204,16 @@ fetchData() {
  
     this.eventsList = data.map(e => {
       //alert(this.eventsList.id);
-      return {   
-      
+      return {        
         id: e.payload.doc.id,      
         title:e.payload.doc.get("title"),
-        start:e.payload.doc.get("start"),
-        end:e.payload.doc.get("end"),     
+        start:e.payload.doc.get("start").toDate(),
+        end:e.payload.doc.get("end").toDate(),     
       } as Calinfo;
       
     })
   });
-}
-  
+}  
 }
 
   

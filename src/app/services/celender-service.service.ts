@@ -18,23 +18,23 @@ export class CelenderServiceService {
    }
 
 
-  getcalenderEvents() {
-    return this.firestore.collection('calender').snapshotChanges().pipe(
-      map(actions => 
-        actions.map(a => {
-          const data = a.payload.doc.data() as Calinfo;
-          const title = a.payload.doc.get("title");
-          const startdate =  a.payload.doc.get("start");
-          const enddate = a.payload.doc.get("end");
-          const id = a.payload.doc.id;                            
-          //const vmid=a.payload.doc.get("vmid")
-          //alert(startdate);
-        //  alert(enddate);
-          return { id,...data };
-        })
-        )
-      )   
-  }
+  // getcalenderEvents() {
+  //   return this.firestore.collection('calender').snapshotChanges().pipe(
+  //     map(actions => 
+  //       actions.map(a => {
+  //         const data = a.payload.doc.data() as Calinfo;
+  //         const title = a.payload.doc.get("title");
+  //         const startdate =  a.payload.doc.get("start");
+  //         const enddate = a.payload.doc.get("end");
+  //         const id = a.payload.doc.id;                            
+  //         //const vmid=a.payload.doc.get("vmid")
+  //         //alert(startdate);
+  //       //  alert(enddate);
+  //         return { id,...data };
+  //       })
+  //       )
+  //     )   
+  // }
 
   createcalenderEvent(vm: Calinfo){
     return this.firestore.collection('calender').add(vm);
@@ -51,16 +51,24 @@ getPolicies() {
   // }
  // Next, you need to add the updatePolicy() method to update an insurance policy by its identifier:
   
+  // updatePolicy(cal: Calinfo){
+  //     delete cal.id;
+  //     alert(cal.id);
+  //     this.firestore.doc('calender/' + cal.id).update(cal);
+  // }
   updatePolicy(cal: Calinfo){
-      delete cal.id;
-      alert(cal.id);
-      this.firestore.doc('calender/' + cal.id).update(cal);
-  }
+   // delete cal.id;
+    alert(cal.id);
+    this.firestore.doc('calender/'+cal.id).update(cal.id);
+}
  // Finally, you can add the deletePolicy() method to delete an insurance policy by its identifier:
   
   deletePolicy(id: string){
       this.firestore.doc('calender/' + id).delete();
   }
+//   updatePolicy(id: string){
+//     this.firestore.doc('calender/' + id).update();
+// }
 }
   
    //end

@@ -67,16 +67,14 @@
     [viewDate]="viewDate"
     [events]="events"
     [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"
-  
+    [activeDayIsOpen]="activeDayIsOpen"  
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
     [events]="events"
-    [refresh]="refresh"
-   
+    [refresh]="refresh" 
     
   >
   </mwl-calendar-week-view>
@@ -84,8 +82,7 @@
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
     [events]="events"
-    [refresh]="refresh"
-   
+    [refresh]="refresh"  
    
   >
   </mwl-calendar-day-view>
@@ -170,8 +167,7 @@
 
 
 <h3>
-  Edit events
- 
+  Edit events 
   <button class="btn btn-primary float-right" (click)="addEvent()">
     Add new
   </button>
@@ -181,7 +177,7 @@
 <div class="table-responsive">
 <table class="table table-bordered">
   <thead>
-    <th>title</th>
+    <th>Title</th>
     <th>Start At</th>
     <th>End At</th>
     <!-- <th>id</th> -->
@@ -199,8 +195,15 @@
           <input            
           class="form-control"
           type="text" name="startdate"
-          [(ngModel)]="event.start"       
-        
+          mwlFlatpickr
+              [(ngModel)]="event.start"
+              (ngModelChange)="refresh.next()"
+              [altInput]="true"
+              [convertModelValue]="true"
+              [enableTime]="true"
+              dateFormat="Y-m-dTH:i"
+              altFormat="F j, Y H:i"
+              placeholder="Not set"
         /> 
         </td>
         <td>
@@ -218,13 +221,10 @@
               placeholder="Not set"
         /> 
         </td>
-      <!-- <td>{{event.title}}</td>
-      <td>{{event.start}}</td>
-      <td>{{event.end}}</td> -->
-      <!-- <td>{{event.id}}</td> -->
+     
       <td>
           <button class="btn btn-primary active" (click)="saveEvents(event)">Save</button></td>
-          <!-- <button (click)="update(event)">update</button> -->
+           <!-- <button  class="btn btn-primary active" (click)="update(event)">update</button>  -->
         <td><button class="btn btn-danger" (click)="delete(event.id)">Delete</button></td> 
     </tr>
   </tbody>
@@ -349,6 +349,11 @@
  <!-- <div>{{ events1.start | date:'dd/MM/yyyy' }}</div>  -->
  <!-- <div>{{ events1.start?.toDate() | date}}</div> -->
 
+  <!-- <td>{{event.title}}</td>
+      <td>{{event.start}}</td>
+      <td>{{event.end}}</td> -->
+      <!-- <td>{{event.id}}</td> -->
+ <div>{{eventsList.title}}</div> 
+ <div>{{eventsList.start}}</div> 
+ <div>{{eventsList.end}}</div> 
  
- <!-- <div>{{events.title}}</div>  -->
-
