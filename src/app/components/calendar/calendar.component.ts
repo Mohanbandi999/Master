@@ -237,22 +237,8 @@ fetchData() {
         end:e.payload.doc.get("end").toDate(),     
       } as Calinfo;     
     })   
-  });
-
-
-  
+  });  
 }  
-
-
-
-
-
-
-
-
-
-
-
 }
 
   

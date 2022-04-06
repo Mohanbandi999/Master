@@ -9,13 +9,8 @@ import { id } from 'date-fns/locale';
 @Injectable({
   providedIn: 'root'
 })
-export class CelenderServiceService {
-  private dbPath = '/calender';
-  tutorialsRef: AngularFirestoreCollection<Calinfo>;
-  constructor(public firestore: AngularFirestore) {
-    this.tutorialsRef = firestore.collection(this.dbPath);
-    //alert(this.tutorialsRef.doc.name);
-   }
+export class CelenderServiceService {  
+  constructor(public firestore: AngularFirestore) {}
   // createcalenderEvent(vm: Calinfo){
   //   return this.firestore.collection('calender').add(vm);
   // } 
@@ -32,26 +27,14 @@ export class CelenderServiceService {
   else{
     this.firestore.doc('calender/'+cal.id).update(cal);
   alert("Updated Successfully")
-  }
-  
+  } 
   
 }
-  //update working
-//   updatePolicy(cal: Calinfo){   
-//     this.firestore.doc('calender/'+cal.id).update(cal);
-// }
-//update working
- 
- // Finally, you can add the deletePolicy() method to delete an insurance policy by its identifier:
-  
   deleteEvent(id: string){
       this.firestore.doc('calender/' + id).delete();
   }
-//   updatePolicy(id: string){
-//     this.firestore.doc('calender/' + id).update();
-// }
 }
   
-   //end
+   
 
 
