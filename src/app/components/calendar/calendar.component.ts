@@ -211,7 +211,7 @@ rows = [];
   //   this.fetchData();  
   // }  
   delete(id: string) {
-    this.CalenderService.deletePolicy(id);     
+    this.CalenderService.deleteEvent(id);     
     alert('The events was Deleted');
     this.ngOnInit();  
 //New start
@@ -223,7 +223,7 @@ rows = [];
 //New end     
   } 
 update(cal: Calinfo) {
-  this.CalenderService.updatePolicy(cal);
+  this.CalenderService.saveupdateEvent(cal);
   //alert('The events was Updated successfully!');
 }
 fetchData() {

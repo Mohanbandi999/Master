@@ -23,7 +23,7 @@ export class CelenderServiceService {
       return this.firestore.collection('calender').snapshotChanges();
   }
  
- updatePolicy(cal: Calinfo){  
+ saveupdateEvent(cal: Calinfo){  
   if(cal.id==0 || cal.id==null || cal.id=='') 
   {
     this.firestore.collection('calender').add(cal);
@@ -44,7 +44,7 @@ export class CelenderServiceService {
  
  // Finally, you can add the deletePolicy() method to delete an insurance policy by its identifier:
   
-  deletePolicy(id: string){
+  deleteEvent(id: string){
       this.firestore.doc('calender/' + id).delete();
   }
 //   updatePolicy(id: string){
