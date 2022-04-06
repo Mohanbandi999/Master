@@ -65,15 +65,15 @@
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
-    [events]="events"
+    [events]="eventsList"
     [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"  
+    
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
-    [events]="events"
+    [events]="eventsList"
     [refresh]="refresh" 
     
   >
@@ -81,7 +81,7 @@
   <mwl-calendar-day-view
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
-    [events]="events"
+    [events]="eventsList"
     [refresh]="refresh"  
    
   >
@@ -188,7 +188,8 @@
       <td><input
         type="text"
         class="form-control"
-        [(ngModel)]="event.title"         
+        [(ngModel)]="event.title"  
+        (keyup)="refresh.next()"       
       /></td>
      
         <td>
@@ -203,7 +204,7 @@
               [enableTime]="true"
               dateFormat="Y-m-dTH:i"
               altFormat="F j, Y H:i"
-              placeholder="Not set"
+              placeholder="Select Date"
         /> 
         </td>
         <td>
@@ -218,19 +219,19 @@
               [enableTime]="true"
               dateFormat="Y-m-dTH:i"
               altFormat="F j, Y H:i"
-              placeholder="Not set"
+              placeholder="Select Date"
         /> 
         </td>
      
-      <td>
-          <button class="btn btn-primary active" (click)="saveEvents(event)">Save</button></td>
-           <!-- <button  class="btn btn-primary active" (click)="update(event)">update</button>  -->
-        <td><button class="btn btn-danger" (click)="delete(event.id)">Delete</button></td> 
+      <!-- <td>
+           <button class="btn btn-primary active" (click)="saveEvents(event)"  >Save</button></td>  -->
+         <td>  <button  class="btn btn-primary active" (click)="update(event)">Save</button> </td>
+        <td><button id="remove" class="btn btn-danger" (click)="delete(event.id)">Delete</button></td> 
     </tr>
   </tbody>
 </table>
 </div>
-
+<div>{{eventsList.title}}</div>  
 
 
 
@@ -353,7 +354,7 @@
       <td>{{event.start}}</td>
       <td>{{event.end}}</td> -->
       <!-- <td>{{event.id}}</td> -->
- <div>{{eventsList.title}}</div> 
- <div>{{eventsList.start}}</div> 
- <div>{{eventsList.end}}</div> 
+ <!-- <div>{{eventsList.title}}</div>   -->
+ <!-- <div>{{eventsList.start}}</div> 
+ <div>{{eventsList.end}}</div>  --> 
  

@@ -71,38 +71,48 @@ const colors: any = {
   templateUrl: './calendar.component.html',
 })
 export class CalendarComponent implements OnInit { 
+ 
 
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
   viewDate: Date = new Date(); 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        // this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.eventsList = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
+  // actions: CalendarEventAction[] = [
+  //   {
+  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+  //     a11yLabel: 'Edit',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       this.handleEvent('Edited', event);
+  //     },
+  //   },
+  //   {
+  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
+  //     a11yLabel: 'Delete',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       // this.events = this.events.filter((iEvent) => iEvent !== event);
+  //       this.eventsList = this.events.filter((iEvent) => iEvent !== event);
+  //       this.handleEvent('Deleted', event);
+  //     },
+  //   },
+  // ];
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
+  // events: CalendarEvent[] = [
     
-  ];
+  // ];
   activeDayIsOpen: boolean = true;
   eventsList: any; 
+
+
+  //New
+  // products: any;
+  currentProduct = null;
+  currentIndex = -1;
+  name = '';
+  
+  //New End
 
   // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     dayClicked({ date, eventsList }: { date: Date; eventsList: CalendarEvent[] }): void {
@@ -119,24 +129,24 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    // this.events = this.events.map((iEvent) => {
-      this.eventsList = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
+  // eventTimesChanged({
+  //   event,
+  //   newStart,
+  //   newEnd,
+  // }: CalendarEventTimesChangedEvent): void {
+  //   // this.events = this.events.map((iEvent) => {
+  //     this.eventsList = this.events.map((iEvent) => {
+  //     if (iEvent === event) {
+  //       return {
+  //         ...event,
+  //         start: newStart,
+  //         end: newEnd,
+  //       };
+  //     }
+  //     return iEvent;
+  //   });
+  //   this.handleEvent('Dropped or resized', event);
+  // }
 
   handleEvent(action: string, event: CalendarEvent): void {
     
@@ -146,8 +156,8 @@ export class CalendarComponent implements OnInit {
       ...this.eventsList,
       {
         title: 'New event',
-        start: startOfDay(new Date(0)),
-        end: endOfDay(new Date(0)),        
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),        
         color: colors.red,
         draggable: true,
         resizable: {
@@ -157,13 +167,25 @@ export class CalendarComponent implements OnInit {
       },
     ];
   }
-  saveEvents(eventAdd: CalendarEvent){    
-    const data = eventAdd as unknown as Calinfo;      
-      this.CalenderService.createcalenderEvent(data); 
-      //this.CalenderService.createcalenderEvent(data); 
-      alert('The events was inserted successfully!');
-      this.ngOnInit(); 
-  }
+
+
+  counter: number = 0;
+
+rows = [];
+
+// addEvent(): void {   
+//   this.counter++;
+//   this.eventsList.push(this.counter);
+// }
+  // saveEvents(eventAdd: CalendarEvent){    
+  //   const data = eventAdd as unknown as Calinfo;      
+  //     this.CalenderService.createcalenderEvent(data); 
+  // //     this.counter++;
+  // // this.eventsList.push(this.counter);
+  //     //this.CalenderService.createcalenderEvent(data); 
+  //     alert('The events was inserted successfully!');
+  //     this.ngOnInit(); 
+  // }
   // deleteEvent(eventToDelete: CalendarEvent) {
   //   this.events = this.events.filter((event) => event !== eventToDelete); 
   //   this.fetchData();     
@@ -172,36 +194,40 @@ export class CalendarComponent implements OnInit {
   setView(view: CalendarView) {
     this.view = view;
   }
-
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }  
   constructor(private _router: Router,private CalenderService : CelenderServiceService) {
-    //this.fetchData();
-   }
- // ngOnInit(): void {  
+    this.fetchData();
+   } 
   ngOnInit():void {  
+    console.log('Called ngOnInit method');
     this.fetchData();   
- } 
+ }
 
-  ngOnChanges() {
-    // this.message = '';
-    // this.currentTutorial = { ...this.tutorial };
-    this.fetchData();  
-  }  
+  // ngOnChanges() {
+  //   // this.message = '';
+  //   // this.currentTutorial = { ...this.tutorial };
+  //   this.fetchData();  
+  // }  
   delete(id: string) {
     this.CalenderService.deletePolicy(id);     
     alert('The events was Deleted');
     this.ngOnInit();  
-     
+//New start
+    for(let i = 0; i < this.eventsList.length; ++i){
+      if (this.eventsList[i].id === id) {
+          this.eventsList.splice(i,1);
+      }
+  }
+//New end     
   } 
 update(cal: Calinfo) {
   this.CalenderService.updatePolicy(cal);
+  //alert('The events was Updated successfully!');
 }
-
 fetchData() {
-  this.CalenderService.getPolicies().subscribe(data => {
- 
+  this.CalenderService.getPolicies().subscribe(data => { 
     this.eventsList = data.map(e => {
       //alert(this.eventsList.id);
       return {        
@@ -209,12 +235,24 @@ fetchData() {
         title:e.payload.doc.get("title"),
         start:e.payload.doc.get("start").toDate(),
         end:e.payload.doc.get("end").toDate(),     
-      } as Calinfo;
-      
-    })
+      } as Calinfo;     
+    })   
   });
+
+
+  
 }  
+
+
+
+
+
+
+
+
+
+
+
 }
 
   
-
