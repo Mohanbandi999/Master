@@ -1,6 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter,OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import {  AbstractControl,FormControl,FormGroup,ValidationErrors,ReactiveFormsModule ,Validators,
+ValidatorFn,FormBuilder} from '@angular/forms';
+import { CelenderServiceService } from 'src/app/services/celender-service.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/services/user.service';
+import { AngularFireList } from '@angular/fire/compat/database';
+import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
+import { Calinfo } from 'src/app/models/calender-data';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { filter, from, map, Observable, of, switchMap, Timestamp } from 'rxjs';
 
 //Add Changes
 import {
@@ -9,11 +18,6 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-
-
-
-
-
 import {
   startOfDay,
   endOfDay,
@@ -66,107 +70,56 @@ const colors: any = {
   ],
   templateUrl: './calendar.component.html',
 })
-//End
-
-// @Component({
-//   selector: 'app-calendar',
-//   templateUrl: './calendar.component.html',
-//   styleUrls: ['./calendar.component.scss']
-// })
-export class CalendarComponent implements OnInit {
-
-  //Add Changes
-// @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+export class CalendarComponent implements OnInit { 
+ 
 
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  viewDate: Date = new Date();
-
-  isAdmin:boolean = this.userService.selectedUser?.role == "1" ? true : false;
-  // modalData: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
-
-  adminActions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-  userActions: CalendarEventAction[] = [];
-
-  actions =this.userService.selectedUser?.role == "1" ? this.adminActions : this.userActions;
+  viewDate: Date = new Date(); 
+  // actions: CalendarEventAction[] = [
+  //   {
+  //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
+  //     a11yLabel: 'Edit',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       this.handleEvent('Edited', event);
+  //     },
+  //   },
+  //   {
+  //     label: '<i class="fas fa-fw fa-trash-alt"></i>',
+  //     a11yLabel: 'Delete',
+  //     onClick: ({ event }: { event: CalendarEvent }): void => {
+  //       // this.events = this.events.filter((iEvent) => iEvent !== event);
+  //       this.eventsList = this.events.filter((iEvent) => iEvent !== event);
+  //       this.handleEvent('Deleted', event);
+  //     },
+  //   },
+  // ];
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-     // start: addHours(startOfDay(new Date()),0),
-      start: addHours(startOfDay(new Date().setHours(13,0,0,0)),0),
-      end: addHours(endOfDay(new Date()), 5050),
-     // end: addHours(new Date(), 11),
-       
-      title: 'Diwali',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
-
+  // events: CalendarEvent[] = [
+    
+  // ];
   activeDayIsOpen: boolean = true;
+  eventsList: any; 
 
-  //constructor(private modal: NgbModal) {}
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  //New
+  // products: any;
+  currentProduct = null;
+  currentIndex = -1;
+  name = '';
+  
+  //New End
+
+  // dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    dayClicked({ date, eventsList }: { date: Date; eventsList: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
+        eventsList.length === 0
       ) {
         this.activeDayIsOpen = false;
       } else {
@@ -176,37 +129,35 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
+  // eventTimesChanged({
+  //   event,
+  //   newStart,
+  //   newEnd,
+  // }: CalendarEventTimesChangedEvent): void {
+  //   // this.events = this.events.map((iEvent) => {
+  //     this.eventsList = this.events.map((iEvent) => {
+  //     if (iEvent === event) {
+  //       return {
+  //         ...event,
+  //         start: newStart,
+  //         end: newEnd,
+  //       };
+  //     }
+  //     return iEvent;
+  //   });
+  //   this.handleEvent('Dropped or resized', event);
+  // }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+    
   }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
+  addEvent(): void {   
+    this.eventsList = [
+      ...this.eventsList,
       {
         title: 'New event',
-        start: startOfDay(new Date(0)),
-        end: endOfDay(new Date(0)),
-        
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),        
         color: colors.red,
         draggable: true,
         resizable: {
@@ -217,27 +168,77 @@ export class CalendarComponent implements OnInit {
     ];
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
+
+  counter: number = 0;
+
+rows = [];
+
+// addEvent(): void {   
+//   this.counter++;
+//   this.eventsList.push(this.counter);
+// }
+  // saveEvents(eventAdd: CalendarEvent){    
+  //   const data = eventAdd as unknown as Calinfo;      
+  //     this.CalenderService.createcalenderEvent(data); 
+  // //     this.counter++;
+  // // this.eventsList.push(this.counter);
+  //     //this.CalenderService.createcalenderEvent(data); 
+  //     alert('The events was inserted successfully!');
+  //     this.ngOnInit(); 
+  // }
+  // deleteEvent(eventToDelete: CalendarEvent) {
+  //   this.events = this.events.filter((event) => event !== eventToDelete); 
+  //   this.fetchData();     
+  // }
 
   setView(view: CalendarView) {
     this.view = view;
   }
-
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }  
+  constructor(private _router: Router,private CalenderService : CelenderServiceService) {
+    this.fetchData();
+   } 
+  ngOnInit():void {  
+    console.log('Called ngOnInit method');
+    this.fetchData();   
+ }
+
+  // ngOnChanges() {
+  //   // this.message = '';
+  //   // this.currentTutorial = { ...this.tutorial };
+  //   this.fetchData();  
+  // }  
+  delete(id: string) {
+    this.CalenderService.deleteEvent(id);     
+    alert('The events was Deleted');
+    this.ngOnInit();  
+//New start
+    for(let i = 0; i < this.eventsList.length; ++i){
+      if (this.eventsList[i].id === id) {
+          this.eventsList.splice(i,1);
+      }
   }
-  //End
-
-
-  constructor(private _router: Router,public userService:UserService) { }
-
-  ngOnInit(): void {}
-
-  // onBack(): void {
-  //   this._router.navigate(['/flexy/home']);
-  // }
+//New end     
+  } 
+update(cal: Calinfo) {
+  this.CalenderService.saveupdateEvent(cal);
+  //alert('The events was Updated successfully!');
+}
+fetchData() {
+  this.CalenderService.getPolicies().subscribe(data => { 
+    this.eventsList = data.map(e => {
+      //alert(this.eventsList.id);
+      return {        
+        id: e.payload.doc.id,      
+        title:e.payload.doc.get("title"),
+        start:e.payload.doc.get("start").toDate(),
+        end:e.payload.doc.get("end").toDate(),     
+      } as Calinfo;     
+    })   
+  });  
+}  
+}
 
   
-}
