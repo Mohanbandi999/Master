@@ -22,7 +22,7 @@ import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 export class ManageUsersComponent implements OnInit {
   employeeList: any;
   hospitalsArray=[];
-  displayedColumns: string[] = ['uid', 'assigned', 'name', 'priority', 'doj', 'view'];
+  displayedColumns: string[] = ['uid', 'assigned', 'name', 'doj', 'view'];
     
     //dataSource:firebase.firestore.DocumentData[]=[];
      dataSourceone:any;
@@ -56,6 +56,7 @@ export class ManageUsersComponent implements OnInit {
         {
           this.userService.editSelectedUser = res[i];
           this.userService.populateForm(res[i]);
+          console.log(res[i]);
           this._router.navigate(['/user-detail']);
           break;
         }
@@ -72,7 +73,7 @@ export class ManageUsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe(res=>{
       this.dataSourceone=res;
       this.datasoc =new MatTableDataSource(this.dataSourceone);
-      console.log(this.datasoc.data)
+      //console.log(this.datasoc.data)
       this.customerArray=this.datasoc.data;
     })
   }  

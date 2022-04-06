@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         else{
           this.router.navigate(['/user-detail']);
         }
-        console.log(result.user);
+        
         
       })       
       })  

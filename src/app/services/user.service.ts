@@ -114,4 +114,27 @@ export class UserService {
   //   }
   //   });
   //  }
+
+  updateEditUser(_id: string, _fname: string,_lname:string,_dob:string,_doj:string, _skillSet:string, _address:string,
+    _officeEmail:string,
+    _phone:string,
+    _project:string,) {    
+    let i=1;
+    let doc = this.afs.collection('users', ref => ref.where('uid', '==', _id));
+    doc.snapshotChanges().subscribe((res: any) => {      
+    if (i===1){      
+      let id = res[0].payload.doc.id;      
+      this.afs.collection('users').doc(id).update({firstName: _fname, lastName:_lname, dob:_dob, doj:_doj,
+        skillSet:_skillSet,
+        address: _address,
+        officeEmail: _officeEmail,
+        phone:_phone,
+        project:_project,
+      });
+      i++;
+      return;
+    }
+  });
+  }
+
 }

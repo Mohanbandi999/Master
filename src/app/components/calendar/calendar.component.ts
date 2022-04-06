@@ -77,7 +77,8 @@ export class CalendarComponent implements OnInit {
 
   CalendarView = CalendarView;
 
-  viewDate: Date = new Date(); 
+  viewDate: Date = new Date();
+  isAdmin:boolean = this.userService.selectedUser?.role == "1" ? true : false; 
   // actions: CalendarEventAction[] = [
   //   {
   //     label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -197,7 +198,7 @@ rows = [];
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }  
-  constructor(private _router: Router,private CalenderService : CelenderServiceService) {
+  constructor(private _router: Router,private CalenderService : CelenderServiceService, private userService:UserService) {
     this.fetchData();
    } 
   ngOnInit():void {  
