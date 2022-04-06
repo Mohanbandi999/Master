@@ -46,6 +46,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onView(id:any): void{
+    console.log(id);
     
     this.userService.getAllUsers().subscribe(res=>{
       for(var i=0;i<res.length;i++)

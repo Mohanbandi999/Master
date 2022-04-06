@@ -17,6 +17,8 @@ import {
   ValidatorFn,
   FormBuilder
 } from '@angular/forms';
+import { V } from '@angular/cdk/keycodes';
+import { AngularFireList } from '@angular/fire/compat/database';
 
 export function passwordsMatchValidator(): ValidatorFn {
   
@@ -47,6 +49,11 @@ export class AddUserComponent implements OnInit {
   downloadURL:Observable<string> | undefined;
   checked = true;  
   hide = true;
+  useridcount:number=0;
+
+  //
+  noteList: Observable<ProfileUser[]> | undefined ;
+  users: AngularFireList<any> | undefined;
 
   ud: ProfileUser = {
     email: '',
@@ -70,11 +77,20 @@ export class AddUserComponent implements OnInit {
       confirmPassword: new FormControl('', Validators.required),
       doj:new FormControl('', Validators.required),
       dob:new FormControl(''),
-      //photoURL: new FormControl(''),
+      officeEmail:new FormControl('',Validators.email),
+      phone:new FormControl('',[ Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      project:new FormControl(''),
+      address:new FormControl(''),
+      skillSet:new FormControl(''),
+      photoURL: new FormControl(''),
       role:new FormControl('', Validators.required),
     },
       { validators: passwordsMatchValidator()}
      );
+  historyRef: any;
+  history: any;
+  
+  
 
 
     constructor(private _router: Router,private authService: AuthenticationService, 
@@ -89,6 +105,7 @@ export class AddUserComponent implements OnInit {
                  ];
 
   ngOnInit(): void {
+    this.lastuser();
 
   }
 
@@ -119,6 +136,12 @@ export class AddUserComponent implements OnInit {
     
      
   }
+
+  get userId(){
+   this.useridcount=this.useridcount+1;
+   return ("sb-"+this.useridcount);
+   
+  }
   // get confirmPassword(){
   //   //return this.signUpForm.get('confirmPassword');
   //   return this.passwordUser;
@@ -132,6 +155,13 @@ export class AddUserComponent implements OnInit {
    get photoURL(){
      return this.fb;
    }
+   get phone(){
+     return this.signUpForm.get("phone")
+   }
+   get officeEmail (){
+    return this.signUpForm.get("officeEmail")
+  }
+   
 
    
   
@@ -172,12 +202,28 @@ export class AddUserComponent implements OnInit {
     }
     
     submit(){                
-      
-
-      this.authService.signUp(this.signUpForm.value.email, this.password,this.signUpForm.value.firstName,
-        this.signUpForm.value.lastName,this.signUpForm.value.doj, this.signUpForm.value.dob,
-        this.photoURL,this.signUpForm.value.role)                                 
+      this.authService.signUp(this.signUpForm.value.email,this.password,this.signUpForm.value.firstName,
+        this.signUpForm.value.lastName,this.signUpForm.value.doj,this.signUpForm.value.dob,
+        this.photoURL,this.signUpForm.value.role,this.userId, 
+        this.signUpForm.value.phone,
+        this.signUpForm.value.officeEmail,
+        this.signUpForm.value.project,
+        this.signUpForm.value.address,
+        this.signUpForm.value.skillSet,
+        )                                 
     }  
-
     
+   
+   
+    lastuser() {
+      this.afs.collection('users').valueChanges()
+       .subscribe( result => {
+        console.log(result.length);
+        this.useridcount=result.length+100;
+        console.log(this.useridcount);
+       })
+  
+    }
+  
+  
 }

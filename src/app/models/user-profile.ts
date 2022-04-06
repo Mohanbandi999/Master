@@ -14,6 +14,9 @@ export interface ProfileUser {
     address?: string;
     skillSet?:Array<string>;
     photoURL?:string;
+    userId?:string;
+
+    
     
     // internal use properties
     emailVerified?: boolean;    

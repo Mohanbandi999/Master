@@ -29,6 +29,7 @@ export class AuthenticationService {
   dob?:any;
   photoURL?:any;
   emailVerified?:any;
+  userId?:any;
 
   password:any;
   lastName: any;
@@ -38,6 +39,10 @@ export class AuthenticationService {
   role: any;
   phone: any;
   address: any;
+
+  officeEmail:any;   
+  project:any;
+  skillSet:any;
 
   userpostList:AngularFireList<ProfileUser>;
   error="";
@@ -72,7 +77,11 @@ export class AuthenticationService {
 
   
   
-  signUp(email:string,password:string,firstName:string,lastName:string,doj:string,dob:string,photoURL:string,role:string){
+  signUp(email:string,password:string,firstName:string,lastName:string,doj:string,dob:string,photoURL:string,role:string,userId:string,phone:string,
+    officeEmail:string,  
+    project:string,
+    address: string,
+    skillSet:Array<string>){
     return (this.afAuth.createUserWithEmailAndPassword(email, password))
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign 
@@ -85,6 +94,14 @@ export class AuthenticationService {
         this.dob=dob;
         this.photoURL=photoURL;
         this.role=role;
+        this.userId=userId;
+        this.phone=phone;
+        this.officeEmail=officeEmail;
+        this.project=project;
+        this.address=address;
+        this.skillSet=skillSet;
+
+
        // this.emailVerified=this.emailVerified
         
        this.SendPasswordEmail(email,firstName,lastName,password);
@@ -135,6 +152,13 @@ export class AuthenticationService {
         dob:this.dob,
         photoURL:this.photoURL,
         role:this.role,
+        userId:this.userId,
+
+        phone:this.phone,
+       officeEmail:this.officeEmail,  
+       project:this.project,
+       address:this.address,
+       skillSet:this.skillSet
         //emailVerified:this.emailVerified
         //password:this.password,
         

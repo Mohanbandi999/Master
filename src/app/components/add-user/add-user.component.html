@@ -1,39 +1,54 @@
 <!-- Form Layout -->
-<div class="form-container">
+<div class="card">
     <div class="card-body">
       <h4 class="mb-32">Add User</h4>
       <form [formGroup]="signUpForm"  (ngSubmit)="submit()">
         
-        
-
-        <mat-form-field  appearance="outline">
+        <mat-form-field class="w-75 fs-16" appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" placeholder="Enter user's FirstName" [value]="ud.firstName"/>
+          <input matInput type="text" placeholder="Enter user's FirstName" [value]="ud.firstName" formControlName="firstName"/>
           <mat-error *ngIf="firstName?.errors?.['required']">
             FirstName is required
           </mat-error>
-        </mat-form-field><br>
+        </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="w-75 fs-16" appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput type="text" placeholder="Enter user's LastName" [value]="ud.lastName"/>
-        </mat-form-field><br>
-
-        
-
+          <input matInput type="text" placeholder="Enter user's LastName" [value]="ud.lastName"  formControlName="lastName"/>
+        </mat-form-field>
        
-        <mat-form-field  appearance="outline">
+        <mat-form-field class="w-75 fs-16"  appearance="outline">
           <mat-label>Personal Email</mat-label>
-          <input matInput type="email" placeholder="Enter user's personal email" [value]="ud.email"/>
+          <input matInput type="email" placeholder="Enter user's personal email" [value]="ud.email" formControlName="email"/>
           <mat-error *ngIf="email?.errors?.['required']">
             Email is required
           </mat-error>
           <mat-error *ngIf="email?.errors?.['email']">
             Please enter a valid email address
           </mat-error>
-        </mat-form-field><br>
+        </mat-form-field>
 
-        <mat-form-field  appearance="outline">
+        <mat-form-field class="w-75 fs-16"  appearance="outline">
+          <mat-label>Official Email</mat-label>
+          <input matInput type="email" placeholder="Enter user's official email" formControlName="officeEmail"/>
+          <mat-error *ngIf="officeEmail?.errors?.['email']">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-75 fs-16" appearance="outline">
+          <mat-label>Contact Number</mat-label>
+          <input matInput type="number" placeholder="Enter user's contact number"  formControlName="phone"/>
+          <mat-error *ngIf="phone?.errors?.['required']">
+            Contact number is required
+          </mat-error>
+          <mat-error *ngIf="phone?.errors?.['pattern']">
+            Please enter a valid mobile number
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-75 fs-16"  appearance="outline">
           <mat-label>User Designation</mat-label>
           <mat-select formControlName="role" placeholder="Role of Employee" >
             <ng-container *ngFor="let role of roles">
@@ -45,21 +60,34 @@
             </mat-error>
          </mat-form-field>
 
-       
-        
-       
-        <mat-form-field  appearance="outline">
+         <mat-form-field class="w-75 fs-16" appearance="outline">
+          <mat-label>Project</mat-label>
+          <input matInput type="text" placeholder="Project"   formControlName="project"/>
+        </mat-form-field>
+
+        <mat-form-field class="w-75 fs-16" appearance="outline">
+          <mat-label>Address for Communication</mat-label>
+          <input matInput type="text" placeholder="Address"   formControlName="address"/>
+        </mat-form-field><br>
+
+        <mat-form-field class="w-75 fs-16" appearance="outline">
+          <mat-label>Skill Set</mat-label>
+          <input matInput type="text" placeholder="Skill set"   formControlName="skillSet"/>
+        </mat-form-field><br>
+
+         <mat-form-field class="w-75 fs-16"  appearance="outline">
             <mat-label>Birth Date (DOB)</mat-label>
-            <input matInput type="date" placeholder="Date of Birth" [value]="ud.dob"/>
-          </mat-form-field><br>
+            <input matInput type="date" placeholder="Date of Birth" [value]="ud.dob" formControlName="dob"/>
+         </mat-form-field><br>
+
         
-        <mat-form-field  appearance="outline">
+         <mat-form-field class="w-75 fs-16"  appearance="outline">
             <mat-label>Joining Date (DOJ)</mat-label>
-            <input matInput type="date" placeholder="Date of Joining" [value]="ud.doj"/>
+            <input matInput type="date" placeholder="Date of Joining" [value]="ud.doj" formControlName="doj"/>
             <mat-error *ngIf="doj?.errors?.['required']">
               DOJ is required
             </mat-error>
-          </mat-form-field>
+         </mat-form-field>
       
     <!--    <mat-form-field class="w-100 fs-16" appearance="outline">
             <mat-label>User ID</mat-label>
@@ -122,7 +150,7 @@
             <mat-label>Upload User Photo / Documents
               <input type="file"
             id="file"
-            
+            formControlName="photoURL"
             #userPhoto
             (change)="onFileSelected($event)"
             name="image"
@@ -130,7 +158,7 @@
             />
             </mat-label>  
             <br/>          
-            <div *ngIf="ud.photoURL != ''"><img [src]="ud.photoURL" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>
+            <div *ngIf="fb != null"><img [src]="fb" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>
         </section>
   
         <button mat-button class="btn btn-info fw-normal" type="submit">Submit</button>

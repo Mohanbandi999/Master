@@ -8,7 +8,7 @@
 
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Employee ID</mat-label>
-          <input matInput type="text" value="User" placeholder="Employee ID" [value]="userService.selectedUser.uid" readonly>
+          <input matInput type="text" value="User" placeholder="Employee ID" [value]="userService.selectedUser.userId" readonly>
         </mat-form-field>
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -28,7 +28,7 @@
 
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Contact Number</mat-label>
-          <input matInput type="email" placeholder="Enter Contact Number" [readonly]="!isEdit">
+          <input matInput type="email" placeholder="Enter Contact Number" [value]="userService.selectedUser.phone" [readonly]="!isEdit">
         </mat-form-field>
   
         <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -38,7 +38,7 @@
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Official Mail</mat-label>
-          <input matInput type="email" placeholder="Enter company email" [readonly]="!isEdit">
+          <input matInput type="email" placeholder="Enter company email"   [value]="userService.selectedUser.officeEmail" [readonly]="!isEdit">
         </mat-form-field>
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -53,12 +53,12 @@
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
             <mat-label>Project</mat-label>
-            <input matInput type="text" placeholder="Project">
+            <input matInput type="text" placeholder="Project"  [value]="userService.selectedUser.project">
           </mat-form-field>          
   
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Address for Communication</mat-label>
-          <textarea matInput [readonly]="!isEdit" rows="5" placeholder="Address for Communication"></textarea>
+          <textarea matInput [readonly]="!isEdit" rows="5" placeholder="Address for Communication" [value]="userService.selectedUser.address"></textarea>
         </mat-form-field>
 
         <mat-form-field class="w-100 fs-16 demo-chip-list">
@@ -71,7 +71,7 @@
             </mat-chip>
             <input placeholder="Add new Skill Set..." [matChipInputFor]="chipList"
               [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="add($event)" />
+              (matChipInputTokenEnd)="add($event)" [value]="userService.selectedUser.skillSet" />
           </mat-chip-list>
         </mat-form-field>
         

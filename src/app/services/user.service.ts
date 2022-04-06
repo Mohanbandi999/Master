@@ -45,6 +45,16 @@ export class UserService {
   public editSelectedUser : any = "";
   form = new FormGroup({
     id:new FormControl(''),
+
+    userId:new FormControl(''),
+    skillSet:new FormControl(''),
+    address:new FormControl(''),
+    officeEmail:new FormControl(''),
+    phone:new FormControl(''),
+    project:new FormControl(''),
+    
+
+
     photoURL:new FormControl(''),
       email:new FormControl(''),
       
