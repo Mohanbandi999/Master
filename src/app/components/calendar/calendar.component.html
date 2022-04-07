@@ -59,7 +59,24 @@
 </div>
 <br />
 
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <!-- <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
+      >{{ day.badgeTotal }}</span
+    > -->
+    <span class="cal-day-number"
+      >{{ day.date | calendarDate:'monthViewDayNumber':locale }}
+      </span>            
+      
+  </div>
+   
+  
+    <div  *ngFor="let event of day.events; index as i">      
+      <span style="margin: 5px; font-weight: 500; color: blue;"> {{event.title}} </span>      
+    </div>    
+  
 
+</ng-template>
 
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
@@ -67,7 +84,7 @@
     [viewDate]="viewDate"
     [events]="eventsList"
     [refresh]="refresh"
-    
+    [cellTemplate]="customCellTemplate"   
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
@@ -87,15 +104,18 @@
   >
   </mwl-calendar-day-view>
 </div>
-<br /><br /><br />
+
+
+
 
 
 
 
 <!-- Calendar Events -->
-<div *ngIf="isAdmin">
+
+<div style="margin-top: 30px;" *ngIf="isAdmin">
 <h3>
-  Edit events 
+  Holiday List  
   <button class="btn btn-primary float-right" (click)="addEvent()">
     Add new
   </button>
@@ -106,9 +126,7 @@
 <table class="table table-bordered">
   <thead>
     <th>Title</th>
-    <th>Start At</th>
-    <th>End At</th>
-    <!-- <th>id</th> -->
+    <th>Date</th>
     <th colspan="2">Action</th> 
   </thead>
   <tbody>
@@ -129,13 +147,13 @@
               (ngModelChange)="refresh.next()"
               [altInput]="true"
               [convertModelValue]="true"
-              [enableTime]="true"
-              dateFormat="Y-m-dTH:i"
-              altFormat="F j, Y H:i"
+              [enableTime]="false"
+              dateFormat="Y-m-d"
+              altFormat="F j, Y"
               placeholder="Select Date"
         /> 
         </td>
-        <td>
+        <td style="display: none;">
           <input            
           class="form-control"
           type="text" name="startdate"
@@ -161,6 +179,10 @@
 </div>
 </div>
 <div>{{eventsList.title}}</div>  
+
+
+
+
 
 
 
