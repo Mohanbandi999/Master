@@ -2,9 +2,27 @@
 <div class="card">
     <div class="card-body">
       <h4 class="mb-32">View / Edit User</h4>
-      <button mat-raised-button class="mb-16 btn btn-info" color="accent" (click)="onEdit()">Edit</button>
+      
       
       <form [formGroup]="resetformone">
+        <div class="newone">
+        <section class="fs-16 mb-16">
+          <mat-label></mat-label>    
+          <div *ngIf="photoURL != null"><img [src]="photoURL" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div><br>        
+        
+        <mat-label>Update User Photo
+          <input type="file"
+          id="file"
+        
+        #userPhoto
+        (change)="onFileSelected($event)"
+        name="image"
+        autocomplete="off" accept=".png,.jpg"
+        />
+        </mat-label>  
+        <br/>          
+    </section>
+    </div>
 
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Employee ID</mat-label>
@@ -83,11 +101,8 @@
           </mat-chip-list>
         </mat-form-field> -->
         
-        <section class="fs-16 mb-16">
-            <mat-label>Uploaded Photos / Documents</mat-label>    
-            <div *ngIf="photoURL != null"><img [src]="photoURL" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>         
-        </section>
-          
+        
+        <button mat-raised-button class="mb-16 btn btn-info" color="accent" (click)="onEdit()">Edit</button>&nbsp; 
         <button *ngIf="isEdit" mat-raised-button class="mb-16 btn btn-info" (click)="updateeditUser()">Update User Details</button>
         &nbsp;
          <button mat-raised-button right class="me-8 mb-8" color="warn" (click)="deleteUser()">Delete User</button> 

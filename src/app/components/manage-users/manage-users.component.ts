@@ -48,20 +48,28 @@ export class ManageUsersComponent implements OnInit {
   onView(id:any): void{
     console.log(id);
     
+    
     this.userService.getAllUsers().subscribe(res=>{
       for(var i=0;i<res.length;i++)
       {
         
         if(id == res[i].uid)
-        {
+        {          
           this.userService.editSelectedUser = res[i];
-          this.userService.populateForm(res[i]);
+                                                             // this.userService.populateForm(res[i]);
           console.log(res[i]);
-          this._router.navigate(['/user-detail']);
-          break;
-        }
+                                                             // this._router.navigate(['/user-detail']);
+          break;          
+        }       
       }
+      setTimeout(() => {
+        console.log('sleep');
+        this._router.navigate(['/user-detail']);
+        // And any other code that should run only after 5s
+      }, 1000);
+      //this._router.navigate(['/user-detail']);
     });
+    
   }
   
   onAddUser(): void{

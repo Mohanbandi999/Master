@@ -192,6 +192,13 @@ export class AuthenticationService {
     passwordReset(email:string){
      return  this.afAuth.sendPasswordResetEmail(email)
     }
+
+    logOut(){
+      return this.afAuth.signOut()
+      .then(() => {
+        this.router.navigate(['/login']);
+      });
+    }
     
       
   }

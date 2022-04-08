@@ -20,11 +20,15 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',[Validators.required]),
   })
   error="";
+  photoURL = this.userService.editSelectedUser.photoURL;
   user: Observable<ProfileUser> | undefined;
   constructor(public authService: AuthenticationService,private router: Router,
     public userService:UserService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.editSelectedUser=this.userService.selectedUser;
+    this.photoURL;
+  }
 
   // onBack(): void {
   //   this.router.navigate(['/flexy/home']);
@@ -76,6 +80,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard']);
         }
         else{
+          this.userService.editSelectedUser=this.userService.selectedUser;
           this.router.navigate(['/user-detail']);
         }
         

@@ -118,7 +118,8 @@ export class UserService {
   updateEditUser(_id: string, _fname: string,_lname:string,_dob:string,_doj:string, _skillSet:string, _address:string,
     _officeEmail:string,
     _phone:string,
-    _project:string,) {    
+    _project:string,
+    _photoURL:string) {    
     let i=1;
     let doc = this.afs.collection('users', ref => ref.where('uid', '==', _id));
     doc.snapshotChanges().subscribe((res: any) => {      
@@ -130,11 +131,12 @@ export class UserService {
         officeEmail: _officeEmail,
         phone:_phone,
         project:_project,
+        photoURL:_photoURL
       });
-      i++;
-      return;
-    }
+      i++;      
+    }    
   });
   }
+
 
 }

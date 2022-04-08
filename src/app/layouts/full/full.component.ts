@@ -94,6 +94,7 @@ export class FullComponent {
   }
 
   onLogout() : void{
+    
     this._router.navigate(['/login']);
   }
 }
