@@ -45,7 +45,7 @@ export class FullComponent {
 
   adminSideBarMenu: sidebarMenu[] = [
     {
-      link: "/home",
+      link: "/dashboard",
       icon: "home",
       menu: "Dashboard",
     },

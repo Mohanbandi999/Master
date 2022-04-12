@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
       // {
         if(this.userService.selectedUser.role == "1")
         {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/manage-users']);
         }
         else{
           this.userService.editSelectedUser=this.userService.selectedUser;

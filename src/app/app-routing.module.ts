@@ -47,13 +47,18 @@ const routes: Routes = [
     children: [
       {path:"", redirectTo:"/reset-password", pathMatch:"full"},
     ]
-  },
+   },
+  
+
+
   {
     path:"",
     component:FullComponent,
     children: [
-      {path:"", redirectTo:"/login", pathMatch:"full"},
-      {path:"home", component:DashboardComponent},
+      //{path:"", redirectTo:"/login", pathMatch:"full"},    
+      //{path:"dashboard", component:DashboardComponent},
+      {path:"user-detail",component:UserDetailComponent},
+      {path:"dashboard", component:DashboardComponent},
       {path:"alerts", component:AlertsComponent},
       {path:"forms", component:FormsComponent},
       {path:"manage-users", component:ManageUsersComponent},
@@ -73,18 +78,21 @@ const routes: Routes = [
       {path:"button", component:ButtonsComponent},
       {path:"manage-permissions",component:ManagePermissionsComponent},
       {path:"calendar",component:CalendarComponent},
-      {path:"user-detail",component:UserDetailComponent},
+      //{path:"user-detail",component:UserDetailComponent},
       {path:"change-password",component:ChangePasswordComponent},
       {path:"add-user",component:AddUserComponent},
       {path:"login",component:LoginComponent},
       {path:"vm-details",component:VmDetailsComponent},
       {path:"add-vm",component:AddVmComponent},
-      {path:"reset-password",component:ResetPasswordComponent}
+      {path:"reset-password",component:ResetPasswordComponent},
+      //{path:"home", component:DashboardComponent},
+      //{path:"**", redirectTo:"/home", pathMatch:"full"},
+      
     ]
   },
-
-  {path:"", redirectTo:"/home", pathMatch:"full"},
-  {path:"**", redirectTo:"/home", pathMatch:"full"},
+      
+// {path:"", redirectTo:"/home", pathMatch:"full"},
+ // {path:"**", redirectTo:"/home", pathMatch:"full"},
 ];
 
 

@@ -83,13 +83,11 @@ export class UserService {
       )   
   }
 
-  populateForm(user:any){
-    this.form.setValue(user);
-  }
-  getUsers(){
-    this.userList=this.afd.list('users');
-    return this.userList.snapshotChanges();
-  }
+  
+  // getUsers(){
+  //   this.userList=this.afd.list('users');
+  //   return this.userList.snapshotChanges();
+  // }
 
   updateUser(uid:any,value:any){
     //console.log(this.afs.doc('/users'+user.uid).snapshotChanges())

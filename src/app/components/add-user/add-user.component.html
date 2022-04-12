@@ -3,6 +3,21 @@
     <div class="card-body">
       <h4 class="mb-32">Add User</h4>
       <form [formGroup]="signUpForm"  (ngSubmit)="submit()">
+
+        <section class="fs-16 mb-16">
+          <mat-label>Upload User Photo / Documents
+            <input type="file"
+          id="file"
+          
+          #userPhoto
+          (change)="onFileSelected($event)"
+          name="image"
+          autocomplete="off" accept=".png,.jpg"
+          />
+          </mat-label>  
+          <br/>          
+          <div *ngIf="fb != null"><img [src]="fb" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>
+       </section>
         
         <mat-form-field class="w-75 fs-16" appearance="outline">
           <mat-label>First Name</mat-label>
@@ -87,7 +102,7 @@
             <mat-error *ngIf="doj?.errors?.['required']">
               DOJ is required
             </mat-error>
-         </mat-form-field>
+         </mat-form-field> <br>
       
     <!--    <mat-form-field class="w-100 fs-16" appearance="outline">
             <mat-label>User ID</mat-label>
@@ -146,22 +161,15 @@
           <mat-radio-button value="3" class="d-block mb-36">Other</mat-radio-button>
         </mat-radio-group> -->
         
-        <section class="fs-16 mb-16">
-            <mat-label>Upload User Photo / Documents
-              <input type="file"
-            id="file"
-            
-            #userPhoto
-            (change)="onFileSelected($event)"
-            name="image"
-            autocomplete="off" accept=".png,.jpg"
-            />
-            </mat-label>  
-            <br/>          
-            <div *ngIf="fb != null"><img [src]="fb" style="border: 3px solid black;border-radius:6px;height: 20%; width:20%"></div>
-        </section>
+        
   
         <button mat-button class="btn btn-info fw-normal" type="submit">Submit</button>
+
+      
+      <div role="alert"  *ngIf="error.length > 0" class="alert alert-danger alert-text-danger align-items-center d-flex fs-14 mb-16 rounded ng-star-inserted"><i-feather _nghost-dto-c11="" class="feather-base me-12 text-danger" ng-reflect-name="alert-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feather feather-alert-circle">
+        <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg></i-feather> {{error}} 
+      </div>
 
       </form>
     </div>

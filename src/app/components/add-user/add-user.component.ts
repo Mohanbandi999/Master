@@ -82,13 +82,14 @@ export class AddUserComponent implements OnInit {
       project:new FormControl(''),
       address:new FormControl(''),
       skillSet:new FormControl(''),
-      photoURL: new FormControl(''),
+      //photoURL: new FormControl(''),
       role:new FormControl('', Validators.required),
     },
       { validators: passwordsMatchValidator()}
      );
   historyRef: any;
   history: any;
+  error="";
   
   
 
@@ -210,7 +211,9 @@ export class AddUserComponent implements OnInit {
         this.signUpForm.value.project,
         this.signUpForm.value.address,
         this.signUpForm.value.skillSet,
-        )                                 
+        )
+        
+        this.error="Successfully created user";
     }  
     
    

@@ -53,6 +53,7 @@ export class UserDetailComponent implements OnInit {
   isEdit = false;
   isAdmin = this.userService.selectedUser.role == "1" ? true: false;
   isAdminEdit = this.isAdmin && !this.isEdit ? true : false;
+  error="";
 
   //image
   fb:any;
@@ -90,7 +91,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   onBack(): void {
-    this._router.navigate(['/flexy/home']);
+    //this._router.navigate(['/flexy/home']);
   }
 
   onCheck(): void{
@@ -144,8 +145,9 @@ export class UserDetailComponent implements OnInit {
       this.userSkillSet.splice(index, 1);
     }
   }
+
   updateeditUser():void{
-    
+    debugger
     // this.userService.updateEditUser(this.userService.editSelectedUser.id,this.resetformone.value.firstName,this.resetformone.value.lastName,
     // this.resetformone.value.dob,this.resetformone.value.doj,this.resetformone.value.skillSet,this.resetformone.value.address,
     // this.resetformone.value.officeEmail,this.resetformone.value.phone,this.resetformone.value.project,this.photoUrl    
@@ -163,9 +165,14 @@ export class UserDetailComponent implements OnInit {
       project:this.resetformone.value.project,
       photoURL:this.photoUrl
     });
-    //this._router.navigate(['/manage-users']);
-     
+     alert("Testing");
+    this.error="Succesfully submitted";
+    setTimeout(() => {
+      this.error="";
+  }, 5000);  //5s
 
+    //this._router.navigate(['user-details']); 
+    //this._router.navigate(['/user-detail']);   
   }
 
   populateForm(user:any){
