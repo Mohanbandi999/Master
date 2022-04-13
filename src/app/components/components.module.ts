@@ -41,6 +41,10 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 //End
 
 
+//New Changes start
+import { TimeSheetComponent } from '../time-sheet/time-sheet.component'; 
+//New Changes end
+
 @NgModule({
   declarations: [
     AlertsComponent,
@@ -68,6 +72,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     VmDetailsComponent,
     AddVmComponent,
     ResetPasswordComponent,
+   TimeSheetComponent
    
   ],
   imports: [
@@ -105,6 +110,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     ManageUsersComponent,
     UserDetailComponent,
     CalendarComponent,
+   // TimeSheetComponent,
    
   ]
 })

@@ -63,7 +63,17 @@ export class FullComponent {
       link: "/vm-details",
       icon: "layout",
       menu: "Manage VMs",
-    }
+    },
+
+//New Changes start
+{
+  link: "/time-sheet",
+  icon: "layout",
+  menu: "Time Sheet",
+}
+//New Changes end
+
+
   ]
   userSideBarMenu: sidebarMenu[] = [
     {
@@ -80,7 +90,14 @@ export class FullComponent {
       link: "/calendar",
       icon: "layout",
       menu: "Calendar",
-    }
+    },
+    //New Changes start
+  {
+    link: "/time-sheet",
+    icon: "layout",
+    menu: "Time Sheet",
+  }
+//New Changes end
   ]
   sidebarMenu:any = null;
   userName:string= "";
