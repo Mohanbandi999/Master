@@ -31,7 +31,7 @@
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" value="User" placeholder="Enter user's first name" formControlName="firstName" [readonly]="!isEdit" >
+          <input matInput type="text" value="User" placeholder="Enter user's first name" formControlName="firstName" [readonly]="!isAdmin" >
         </mat-form-field>
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -41,7 +41,7 @@
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
           <mat-label>Date of Birth</mat-label>
-          <input matInput type="date" placeholder="Date of Birth" formControlName="dob" [readonly]="!isEdit">
+          <input matInput type="date" placeholder="Date of Birth"   formControlName="dob" [max]="getToday()" [readonly]="!isEdit">
         </mat-form-field>
 
         <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -61,17 +61,17 @@
         
         <mat-form-field class="w-100 fs-16" appearance="outline">
             <mat-label>Date of Joining</mat-label>
-            <input matInput  type="date" placeholder="Date of Joining" formControlName="doj" [readonly]="!isEdit">
+            <input matInput  type="date" placeholder="Date of Joining"  formControlName="doj"  [max]="getToday()" [readonly]="!isAdmin">
           </mat-form-field>
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
               <mat-label>Designation</mat-label>
-              <input matInput type="text" placeholder="User Designation" formControlName="role" >
+              <input matInput type="text" placeholder="User Designation" formControlName="role" [readonly]="!isEdit" >
             </mat-form-field>            
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
             <mat-label>Project</mat-label>
-            <input matInput type="text" placeholder="Project"  formControlName="project">
+            <input matInput type="text" placeholder="Project"  formControlName="project" [readonly]="!isEdit">
           </mat-form-field>          
   
         <mat-form-field class="w-100 fs-16" appearance="outline">

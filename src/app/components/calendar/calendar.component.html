@@ -1,3 +1,4 @@
+<div>
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">
@@ -178,7 +179,14 @@
 </table>
 </div>
 </div>
-<div>{{eventsList.title}}</div>  
+<div>{{eventsList.title}}</div>
+
+<div role="alert"  *ngIf="error.length > 0" class="alert alert-danger alert-text-danger align-items-center d-flex fs-14 mb-16 rounded ng-star-inserted"><i-feather _nghost-dto-c11="" class="feather-base me-12 text-danger" ng-reflect-name="alert-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feather feather-alert-circle">
+  <line x1="12" y1="16" x2="12.01" y2="16"  ></line>
+  </svg></i-feather> {{error}} 
+</div>
+</div>
+
 
 
 

@@ -92,13 +92,13 @@
 
          <mat-form-field class="w-75 fs-16"  appearance="outline">
             <mat-label>Birth Date (DOB)</mat-label>
-            <input matInput type="date" placeholder="Date of Birth" [value]="ud.dob" formControlName="dob"/>
+           <input matInput type="date"  max=today placeholder="Date of Birth" [value]="ud.dob" [max]="getToday()" ngModel required formControlName="dob"/>             
          </mat-form-field><br>
 
         
          <mat-form-field class="w-75 fs-16"  appearance="outline">
             <mat-label>Joining Date (DOJ)</mat-label>
-            <input matInput type="date" placeholder="Date of Joining" [value]="ud.doj" formControlName="doj"/>
+            <input matInput type="date" placeholder="Date of Joining" [value]="ud.doj" [max]="getToday()" ngModel required formControlName="doj"/>
             <mat-error *ngIf="doj?.errors?.['required']">
               DOJ is required
             </mat-error>

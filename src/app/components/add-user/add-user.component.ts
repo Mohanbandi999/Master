@@ -50,8 +50,16 @@ export class AddUserComponent implements OnInit {
   checked = true;  
   hide = true;
   useridcount:number=0;
+  enull="";
 
   //
+  //today = new Date();
+  
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
+ }
+
+
   noteList: Observable<ProfileUser[]> | undefined ;
   users: AngularFireList<any> | undefined;
 
@@ -154,8 +162,19 @@ export class AddUserComponent implements OnInit {
     return this.signUpForm.get('role');
    }
    get photoURL(){
-     return this.fb;
+
+     //return this.fb;
+     if(this.fb !=null){
+      return this.fb;
+      console.log(this.fb);
+  }
+  else{
+  return this.enull;
+  }
    }
+   
+
+
    get phone(){
      return this.signUpForm.get("phone")
    }

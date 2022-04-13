@@ -77,7 +77,9 @@ export class LoginComponent implements OnInit {
       // {
         if(this.userService.selectedUser.role == "1")
         {
-        this.router.navigate(['/manage-users']);
+          if(localStorage.getItem('UpdateSt') != 'Yes')
+          this.router.navigate(['/manage-users']);
+        
         }
         else{
           this.userService.editSelectedUser=this.userService.selectedUser;

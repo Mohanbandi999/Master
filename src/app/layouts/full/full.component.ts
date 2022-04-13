@@ -93,8 +93,8 @@ export class FullComponent {
     this._router.navigate(['/user-detail']);
   }
 
-  onLogout() : void{
-    
+  onLogout() : void{  
+    localStorage.setItem('UpdateSt','');
     this._router.navigate(['/login']);
   }
 }

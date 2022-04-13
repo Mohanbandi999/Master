@@ -54,6 +54,7 @@ export class UserDetailComponent implements OnInit {
   isAdmin = this.userService.selectedUser.role == "1" ? true: false;
   isAdminEdit = this.isAdmin && !this.isEdit ? true : false;
   error="";
+  
 
   //image
   fb:any;
@@ -121,6 +122,7 @@ export class UserDetailComponent implements OnInit {
   addOnBlur = true;
   selectable = true;
   removable = true;
+  
   userSkillSet = [{ name: 'test framework' }];
 
   add(event: MatChipInputEvent): void {
@@ -157,6 +159,7 @@ export class UserDetailComponent implements OnInit {
     //this._router.navigate(['/manage-users']);
 
     console.log(this.userService.editSelectedUser)
+    
     this.afs.collection('users').doc(this.userService.editSelectedUser.id).update({firstName: this.resetformone.value.firstName, lastName:this.resetformone.value.lastName, dob:this.resetformone.value.dob, doj:this.resetformone.value.doj,
       skillSet:this.resetformone.value.skillSet,
       address: this.resetformone.value.address,
@@ -165,7 +168,8 @@ export class UserDetailComponent implements OnInit {
       project:this.resetformone.value.project,
       photoURL:this.photoUrl
     });
-     alert("Testing");
+      localStorage.setItem('UpdateSt','Yes');
+     
     this.error="Succesfully submitted";
     setTimeout(() => {
       this.error="";
@@ -219,6 +223,12 @@ export class UserDetailComponent implements OnInit {
           console.log(url);
         }
       });
-
     }
+
+
+
+
+    getToday(): string {
+      return new Date().toISOString().split('T')[0]
+   }
 }

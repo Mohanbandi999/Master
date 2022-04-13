@@ -72,7 +72,7 @@ const colors: any = {
 })
 export class CalendarComponent implements OnInit { 
  
-
+  error="";
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -80,6 +80,7 @@ export class CalendarComponent implements OnInit {
   viewDate: Date = new Date(); 
 
   isAdmin:boolean = this.userService.selectedUser?.role == "1" ? true : false;
+  
   
   // actions: CalendarEventAction[] = [
   //   {
@@ -200,12 +201,12 @@ rows = [];
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }  
-  constructor(private _router: Router,private CalenderService : CelenderServiceService,private userService:UserService) {
+  constructor(private _router: Router,private CalenderService : CelenderServiceService,private userService:UserService,public firestore: AngularFirestore) {
     this.fetchData();
    } 
   ngOnInit():void {  
     console.log('Called ngOnInit method');
-    this.fetchData();   
+    this.fetchData();        
  }
 
   // ngOnChanges() {
@@ -226,7 +227,7 @@ rows = [];
 //New end     
   } 
 update(cal: Calinfo) {
-  this.CalenderService.saveupdateEvent(cal);
+  this.saveupdateEvent(cal);
   //alert('The events was Updated successfully!');
 }
 fetchData() {
@@ -241,7 +242,26 @@ fetchData() {
       } as Calinfo;     
     })   
   });  
-}  
+} 
+
+saveupdateEvent(cal: Calinfo):void{  
+  // if(cal.id==0 || cal.id==null || cal.id=='') 
+  // {
+  //   this.firestore.collection('calender').add(cal);    
+  //   this.error="Inserted Successfully";  
+  // }
+  // else{
+  //   this.firestore.doc('calender/'+cal.id).update(cal);
+  //   this.error="Updated Succssfully";   
+  // } 
+
+  this.firestore.collection('calender').add(cal);    
+  this.error="Inserted Successfully";
+  setTimeout(() => {
+    this.error="new";
+}, 5000);  //5s
+}
+
 }
 
   
