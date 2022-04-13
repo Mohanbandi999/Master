@@ -30,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VmDetailsComponent } from './components/vm-details/vm-details.component';
 import { AddVmComponent } from './components/add-vm/add-vm.component';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component'
+import { TimeSheetComponent } from './time-sheet/time-sheet.component';
 
 
 
@@ -87,6 +88,8 @@ const routes: Routes = [
       {path:"reset-password",component:ResetPasswordComponent},
       //{path:"home", component:DashboardComponent},
       //{path:"**", redirectTo:"/home", pathMatch:"full"},
+      {path:"time-sheet",component:TimeSheetComponent},
+      
       
     ]
   },
