@@ -107,38 +107,10 @@ export class TimeSheetComponent implements OnInit {
     {
       start: subDays(endOfMonth(new Date()), 3),
       //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Monday',
+      title: 'Test',
       //color: colors.blue,
       //allDay: true,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Tuesday',
-      //color: colors.blue,
-      //allDay: true,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Wednesday',
-      //color: colors.blue,
-      //allDay: true,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Thursday',
-      //color: colors.blue,
-      //allDay: true,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Friday',
-      //color: colors.blue,
-      //allDay: true,
-    },
+    }
   ];
   
 
@@ -240,8 +212,34 @@ export class TimeSheetComponent implements OnInit {
 // }
 
   constructor() { }
+  //date1 = new Date((new Date().getTime() - 3888000000));
+  maxDate = new Date();
+  curDate = new Date();
+  startDay = 1; //0=sunday, 1=monday etc.
+  d = this.maxDate.getDay(); //get the current day
+  weekStart = new Date(this.maxDate.valueOf() - (this.d<=0 ? 7-this.startDay:this.d-this.startDay)*86400000); //rewind to start day
+  weekEnd = new Date(this.weekStart.valueOf() + 6*86400000); //add 6 days to get last day  
+  weekStarttemp = this.weekStart;
   ngOnInit(): void {
   this.myDate.setDate(this.date.getDate() + 7);
   }
 
+ 
+  onChangeEvent(event:any){
+    let temp = this.weekStart.getDate();    
+    for(let i=0; i<6;i++){      
+            
+        if( temp <= this.maxDate.getDate())
+        {  let dd;     if(i == 2)  {
+          dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + 1));          
+        }else{
+           dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + i));
+        }
+          //console.log(dd);
+          let m = dd.getMonth()+1;
+          console.log(dd.getDate()+'/'+m+'/'+dd.getFullYear());
+        }
+        this.weekStarttemp = this.weekStart;
+    }
+  }
 }

@@ -93,35 +93,37 @@
   </mwl-calendar-day-view>
 </div> -->
 
-<br /><br /><br />
-
 
 <!-- <h3>User Name</h3> -->
 
-<h3 style="color:blue;">
-  User Name
-  <!-- <button class="btn btn-primary float-right" (click)="addEvent()">
-    Add new
-  </button> --><button class="btn btn-primary float-right" >Date Picker:<input type="date" name="myDate" ></button>
-  <div class="clearfix"></div>
+<h3 style="color:blue;">   
+  <!-- <button class="btn btn-primary float-right"  >Date Picker:<input type="date" name="myDate" (change)="selectDate()" ></button> -->
+  <mat-form-field style="float: right;">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="curDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onChangeEvent($event)" >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ></mat-datepicker>
+  </mat-form-field>
+  
+  <div class="clearfix"></div>  
 </h3>
-
+<button class="btn btn-primary float-right" (click)="addEvent()">
+  Add new
+</button><br/>
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
           
-        <th>Date</th>
-        <th>Day</th>
+        <th>Task</th>
+        <th>Description</th>
         <th>Hours</th>    
-        <!-- <th>Remove</th> -->
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let event of events">
        
-        <td>
+        <!-- <td>
           <input
             class="form-control"
             type="text"
@@ -135,7 +137,7 @@
             altFormat="F j, Y H:i"
             placeholder="Not set"
           />
-        </td>
+        </td> -->
         
         <td>
           <input
@@ -145,6 +147,11 @@
             (keyup)="refresh.next()"
           />
         </td>
+        <td> <input
+          type="text"
+          class="form-control"
+        
+        /></td>
         <td> <input
           type="text"
           class="form-control"
@@ -158,17 +165,7 @@
         </td> -->
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-          <th scope="row">Totals</th>
-          <td></td>
-          <td> <input
-            type="text"
-            class="form-control"
-          
-          /></td>
-      </tr>
-  </tfoot>
+    
   </table>
 </div>
 <div>
