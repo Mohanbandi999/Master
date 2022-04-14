@@ -40,7 +40,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 //End
 
-
+import { TimeSheetComponent } from '../time-sheet/time-sheet.component';
 @NgModule({
   declarations: [
     AlertsComponent,
@@ -68,6 +68,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     VmDetailsComponent,
     AddVmComponent,
     ResetPasswordComponent,
+    TimeSheetComponent
    
   ],
   imports: [

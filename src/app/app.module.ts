@@ -24,13 +24,13 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import {AngularFireStorageReference,AngularFireUploadTask,BUCKET} from "@angular/fire/compat/storage";
 import { CommonModule } from '@angular/common';
- import { TimeSheetComponent } from './time-sheet/time-sheet.component';
+ //import { TimeSheetComponent } from './time-sheet/time-sheet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FullComponent,
-    TimeSheetComponent,
+   // TimeSheetComponent,
   ],
   imports: [
     BrowserModule,

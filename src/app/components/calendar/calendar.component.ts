@@ -155,32 +155,32 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     
   }
-  addEvent(): void {   
-    this.eventsList = [
-      ...this.eventsList,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),        
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
+  // addEvent(): void {   
+  //   this.eventsList = [
+  //     ...this.eventsList,
+  //     {
+  //       title: 'New event',
+  //       start: startOfDay(new Date()),
+  //       end: endOfDay(new Date()),        
+  //       color: colors.red,
+  //       draggable: true,
+  //       resizable: {
+  //         beforeStart: true,
+  //         afterEnd: true,
+  //       },
+  //     },
+  //   ];
+  // }
 
 
   counter: number = 0;
 
 rows = [];
 
-// addEvent(): void {   
-//   this.counter++;
-//   this.eventsList.push(this.counter);
-// }
+addEvent(): void {   
+  this.counter++;
+  this.eventsList.push(this.counter);
+}
   // saveEvents(eventAdd: CalendarEvent){    
   //   const data = eventAdd as unknown as Calinfo;      
   //     this.CalenderService.createcalenderEvent(data); 
