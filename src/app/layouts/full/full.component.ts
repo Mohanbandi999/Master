@@ -90,11 +90,20 @@ export class FullComponent {
   }
   
   onViewAccount() : void{
+    
     this._router.navigate(['/user-detail']);
   }
 
-  onLogout() : void{  
+  onLogout() : void{ 
+
+    
+     // console.log("testting2365");
     localStorage.setItem('UpdateSt','');
+   // this.afAuth.signOut() ; 
     this._router.navigate(['/login']);
+    
+
+    
+    
   }
 }

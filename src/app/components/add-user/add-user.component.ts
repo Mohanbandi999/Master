@@ -81,8 +81,8 @@ export class AddUserComponent implements OnInit {
       firstName:new FormControl('',Validators.required),
       lastName:new FormControl(''),
       email:new FormControl('', [Validators.email,Validators.required]),
-      password: new FormControl('',[ Validators.required,Validators.minLength(8)]),
-      confirmPassword: new FormControl('', Validators.required),
+      //password: new FormControl('',[ Validators.required,Validators.minLength(8)]),
+      //confirmPassword: new FormControl('', Validators.required),
       doj:new FormControl('', Validators.required),
       dob:new FormControl(''),
       officeEmail:new FormControl('',Validators.email),
@@ -93,7 +93,7 @@ export class AddUserComponent implements OnInit {
       //photoURL: new FormControl(''),
       role:new FormControl('', Validators.required),
     },
-      { validators: passwordsMatchValidator()}
+      //{ validators: passwordsMatchValidator()}
      );
   historyRef: any;
   history: any;
@@ -221,7 +221,8 @@ export class AddUserComponent implements OnInit {
 
     }
     
-    submit(){                
+    submit(){ 
+                    
       this.authService.signUp(this.signUpForm.value.email,this.password,this.signUpForm.value.firstName,
         this.signUpForm.value.lastName,this.signUpForm.value.doj,this.signUpForm.value.dob,
         this.photoURL,this.signUpForm.value.role,this.userId, 
@@ -232,7 +233,12 @@ export class AddUserComponent implements OnInit {
         this.signUpForm.value.skillSet,
         )
         
+        
         this.error="Successfully created user";
+        setTimeout(() => {this.error="";}, 2000);  //5s
+
+
+        localStorage.setItem('UpdateSt','Yes');        
     }  
     
    

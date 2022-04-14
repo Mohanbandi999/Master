@@ -66,7 +66,7 @@
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
               <mat-label>Designation</mat-label>
-              <input matInput type="text" placeholder="User Designation" formControlName="role" [readonly]="!isEdit" >
+              <input matInput type="text" placeholder="User Designation" formControlName="role" [readonly]="!isAdmin" >
             </mat-form-field>            
 
           <mat-form-field class="w-100 fs-16" appearance="outline">
@@ -105,7 +105,7 @@
         <button mat-raised-button class="mb-16 btn btn-info" color="accent" (click)="onEdit()">Edit</button>&nbsp; 
         <button *ngIf="isEdit" mat-raised-button class="mb-16 btn btn-info" (click)="updateeditUser()">Update User Details</button>
         &nbsp;
-         <button mat-raised-button right class="me-8 mb-8" color="warn" (click)="deleteUser()">Delete User</button> 
+         <button *ngIf="isAdmin" mat-raised-button right class="me-8 mb-8" color="warn" (click)="deleteUser()">Delete User</button> 
 
          <div role="alert"  *ngIf="error.length > 0" class="alert alert-danger alert-text-danger align-items-center d-flex fs-14 mb-16 rounded ng-star-inserted"><i-feather _nghost-dto-c11="" class="feather-base me-12 text-danger" ng-reflect-name="alert-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feather feather-alert-circle">
           <line x1="12" y1="16" x2="12.01" y2="16"  ></line>

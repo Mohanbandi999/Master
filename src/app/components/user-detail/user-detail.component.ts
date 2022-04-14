@@ -55,6 +55,7 @@ export class UserDetailComponent implements OnInit {
   isAdminEdit = this.isAdmin && !this.isEdit ? true : false;
   error="";
   
+  
 
   //image
   fb:any;
@@ -162,6 +163,7 @@ export class UserDetailComponent implements OnInit {
     
     this.afs.collection('users').doc(this.userService.editSelectedUser.id).update({firstName: this.resetformone.value.firstName, lastName:this.resetformone.value.lastName, dob:this.resetformone.value.dob, doj:this.resetformone.value.doj,
       skillSet:this.resetformone.value.skillSet,
+      role:this.resetformone.value.role,
       address: this.resetformone.value.address,
       officeEmail: this.resetformone.value.officeEmail,
       phone:this.resetformone.value.phone,

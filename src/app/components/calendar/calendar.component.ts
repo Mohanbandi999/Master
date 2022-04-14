@@ -10,6 +10,7 @@ import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
 import { Calinfo } from 'src/app/models/calender-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { filter, from, map, Observable, of, switchMap, Timestamp } from 'rxjs';
+//import { setTimeout } from 'timers';
 
 //Add Changes
 import {
@@ -37,6 +38,7 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import startOfISOWeekYear from 'date-fns/startOfISOWeekYear';
+
 
 const colors: any = {
   red: {
@@ -155,7 +157,8 @@ export class CalendarComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     
   }
-  addEvent(): void {   
+  addEvent(): void { 
+    this.error="" ; 
     this.eventsList = [
       ...this.eventsList,
       {
@@ -206,7 +209,8 @@ rows = [];
    } 
   ngOnInit():void {  
     console.log('Called ngOnInit method');
-    this.fetchData();        
+    this.fetchData(); 
+           
  }
 
   // ngOnChanges() {
@@ -216,7 +220,7 @@ rows = [];
   // }  
   delete(id: string) {
     this.CalenderService.deleteEvent(id);     
-    alert('The events was Deleted');
+    this.error='The events was Deleted';
     this.ngOnInit();  
 //New start
     for(let i = 0; i < this.eventsList.length; ++i){
@@ -226,10 +230,10 @@ rows = [];
   }
 //New end     
   } 
-update(cal: Calinfo) {
-  this.saveupdateEvent(cal);
+//update(cal: Calinfo) {
+//  this.saveupdateEvent(cal);
   //alert('The events was Updated successfully!');
-}
+//}
 fetchData() {
   this.CalenderService.getPolicies().subscribe(data => { 
     this.eventsList = data.map(e => {
@@ -244,24 +248,23 @@ fetchData() {
   });  
 } 
 
-saveupdateEvent(cal: Calinfo):void{  
-  // if(cal.id==0 || cal.id==null || cal.id=='') 
-  // {
-  //   this.firestore.collection('calender').add(cal);    
-  //   this.error="Inserted Successfully";  
-  // }
-  // else{
-  //   this.firestore.doc('calender/'+cal.id).update(cal);
-  //   this.error="Updated Succssfully";   
-  // } 
+update(cal: Calinfo):void{
+  this.error="";
+  if(cal.id==0 || cal.id==null || cal.id=='') 
+  {
+    this.firestore.collection('calender').add(cal);    
+    this.error="Inserted Successfully";
+    setTimeout(()=>{ this.error="";},3000);
+    
+  }
+  else{
+    this.firestore.doc('calender/'+cal.id).update(cal);
+    this.error="Updated Succssfully";
+    setTimeout(()=>{ this.error="";},3000);
+  }
+}  
 
-  this.firestore.collection('calender').add(cal);    
-  this.error="Inserted Successfully";
-  setTimeout(() => {
-    this.error="new";
-}, 5000);  //5s
-}
-
+   
 }
 
   

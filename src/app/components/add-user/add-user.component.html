@@ -92,7 +92,7 @@
 
          <mat-form-field class="w-75 fs-16"  appearance="outline">
             <mat-label>Birth Date (DOB)</mat-label>
-           <input matInput type="date"  max=today placeholder="Date of Birth" [value]="ud.dob" [max]="getToday()" ngModel required formControlName="dob"/>             
+           <input matInput type="date"  max=today placeholder="Date of Birth" [value]="ud.dob" [max]="getToday()" ngModel  formControlName="dob"/>             
          </mat-form-field><br>
 
         
@@ -163,7 +163,7 @@
         
         
   
-        <button mat-button class="btn btn-info fw-normal" type="submit">Submit</button>
+        <button mat-button class="btn btn-info fw-normal"  [disabled]="signUpForm.invalid"  type="submit">Submit</button>
 
       
       <div role="alert"  *ngIf="error.length > 0" class="alert alert-danger alert-text-danger align-items-center d-flex fs-14 mb-16 rounded ng-star-inserted"><i-feather _nghost-dto-c11="" class="feather-base me-12 text-danger" ng-reflect-name="alert-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="feather feather-alert-circle">

@@ -20,14 +20,15 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',[Validators.required]),
   })
   error="";
-  photoURL = this.userService.editSelectedUser.photoURL;
+  photoURL="";
+  //photoURL = this.userService.editSelectedUser.photoURL;
   user: Observable<ProfileUser> | undefined;
   constructor(public authService: AuthenticationService,private router: Router,
     public userService:UserService) { }
 
   ngOnInit(): void {
     this.userService.editSelectedUser=this.userService.selectedUser;
-    this.photoURL;
+    this.photoURL = this.userService.editSelectedUser.photoURL;
   }
 
   // onBack(): void {
