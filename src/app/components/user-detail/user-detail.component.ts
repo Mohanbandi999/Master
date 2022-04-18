@@ -38,7 +38,7 @@ export class UserDetailComponent implements OnInit {
     photoURL:new FormControl(''),
     role:new FormControl(''),
     userId:new FormControl(''),
-    phone:new FormControl(''),
+    phone:new FormControl('',[ Validators.required,Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]),
     project:new FormControl(''),
     address:new FormControl(''),
     skillSet:new FormControl(''),
@@ -91,7 +91,11 @@ export class UserDetailComponent implements OnInit {
     // }
     
   }
+  get phone(){
+    return this.resetformone.get("phone")
+  }
 
+  
   onBack(): void {
     //this._router.navigate(['/flexy/home']);
   }

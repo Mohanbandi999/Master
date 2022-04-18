@@ -21,12 +21,14 @@ export class LoginComponent implements OnInit {
   })
   error="";
   photoURL="";
+  
   //photoURL = this.userService.editSelectedUser.photoURL;
   user: Observable<ProfileUser> | undefined;
   constructor(public authService: AuthenticationService,private router: Router,
     public userService:UserService) { }
 
   ngOnInit(): void {
+    
     this.userService.editSelectedUser=this.userService.selectedUser;
     this.photoURL = this.userService.editSelectedUser.photoURL;
   }
@@ -56,9 +58,15 @@ export class LoginComponent implements OnInit {
         // this.datasoc =new MatTableDataSource(this.dataSourceone);
         for(var i=0;i<res.length;i++)
         {
+          
           if(result.user?.uid == res[i].uid)
           {
+            
             this.userService.selectedUser = res[i];
+            localStorage.setItem('logRole',this.userService.selectedUser.role);
+            localStorage.setItem('logName',this.userService.selectedUser.firstName);
+            localStorage.setItem('logUrl',this.userService.selectedUser.photoUrl);
+
             //this.userName = this.selectedUser.displayName;
             break;
           }
@@ -83,6 +91,7 @@ export class LoginComponent implements OnInit {
         
         }
         else{
+          
           this.userService.editSelectedUser=this.userService.selectedUser;
           this.router.navigate(['/user-detail']);
         }

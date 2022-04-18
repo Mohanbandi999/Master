@@ -23,7 +23,7 @@ export class AuthenticationService {
   currentUser:any;
   
   userData: any;
-  user: Observable<ProfileUser| undefined |null>;
+  //user: Observable<ProfileUser| undefined |null>;
   firstName?:any;
   doj?:any;
   dob?:any;
@@ -44,35 +44,45 @@ export class AuthenticationService {
   project:any;
   skillSet:any;
 
-  userpostList:AngularFireList<ProfileUser>;
+  //userpostList:AngularFireList<ProfileUser>;
   error="";
    
-
-
   constructor( public afs: AngularFirestore,public afAuth: AngularFireAuth,public router: Router, public ngZone: NgZone,
     public db:AngularFireDatabase) 
-    {
+    { 
+  //     debugger       
+  //     this.userpostList = db.list('/users');
+  //     this.user = this.afAuth.authState.pipe(switchMap(user => {
       
-      
-      this.userpostList = db.list('/users');
-      
+  //     if(user){
+  //         console.log("lkop"+user)
+  //         this.userData = user;
+  //         localStorage.setItem('user', JSON.stringify(this.userData));
+  //         JSON.parse(localStorage.getItem('user')!);
+  //         return this.afs.doc<ProfileUser>(`users/${user.uid}`).valueChanges();
+  //     }
+  //     else {
+  //         localStorage.setItem('user',"");
+  //         JSON.parse(localStorage.getItem('user')!);
+  //         return of(null);
+  //     } 
+  // })) 
+  this.afAuth.authState.subscribe((user) => {
+    if (user) {
+      this.userData = user;
+      localStorage.setItem('user', JSON.stringify(this.userData));
+      localStorage.setItem('userPhotoUrl', JSON.stringify(this.userData.photoUrl));
+      localStorage.setItem('userRole', JSON.stringify(this.userData.role));
+
+      JSON.parse(localStorage.getItem('user')!);
+    } else {
+      localStorage.setItem('user', 'null');
+      JSON.parse(localStorage.getItem('user')!);
+    }
+  });
 
 
-    this.user = this.afAuth.authState.pipe(switchMap(user => {
-      
-      if(user){
-          console.log("lkop"+user)
-          this.userData = user;
-          localStorage.setItem('user', JSON.stringify(this.userData));
-         // JSON.parse(localStorage.getItem('user'));
-          return this.afs.doc<ProfileUser>(`users/${user.uid}`).valueChanges();
-      }
-      else {
-          localStorage.setItem('user',"");
-         // JSON.parse(localStorage.getItem('user'));
-          return of(null);
-      } 
-  })) 
+
    }
 
   
@@ -174,8 +184,7 @@ export class AuthenticationService {
 
     login(email: string, password: string) {
       
-      return this.afAuth.signInWithEmailAndPassword(email, password);
-      
+      return this.afAuth.signInWithEmailAndPassword(email, password);     
      }
     
     get isLoggedIn(): boolean {
@@ -183,10 +192,10 @@ export class AuthenticationService {
       return user !== null && user.emailVerified !== false ? true : false;
     }
 
-    getAllUser(): AngularFireList<ProfileUser> {
-      console.log(this.userpostList)
-      return this.userpostList;
-    }
+   // getAllUser(): AngularFireList<ProfileUser> {
+    //  console.log(this.userpostList)
+    //  return this.userpostList;
+   // }
 
 
     passwordReset(email:string){

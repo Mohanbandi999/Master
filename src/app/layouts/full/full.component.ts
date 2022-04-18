@@ -25,6 +25,8 @@ export class FullComponent {
   selectedUser:any;
   userIcon:string = "";
   isAdmin:boolean = false;
+  
+
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -32,12 +34,37 @@ export class FullComponent {
       shareReplay()
     );
     user$ = this.afAuth.user;
+
+    rolee: string | null;
+    photourl:string| null;
+  
+    
   constructor(private _router: Router, private breakpointObserver: BreakpointObserver,
     public authService: AuthenticationService,public userService:UserService,public afAuth: AngularFireAuth) {
-      this.userName = this.userService.selectedUser?.firstName;
-      this.isAdmin = this.userService.selectedUser?.role == "1" ? true:false;      
-      this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
+      //this.userName = this.userService.selectedUser?.firstName;
+      //this.isAdmin = this.userService.selectedUser?.role == "1" ? true:false;      
+      //this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
       this.userIcon = this.userService.selectedUser?.photoURL ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
+    
+      // alert(this.userService.selectedUser?.firstName);
+       //localStorage.setItem('userName', this.userService.selectedUser?.firstName);
+       //console.log(localStorage.getItem('userName'));
+       //this.userName=localStorage.getItem('userName');
+       this.userName=localStorage.getItem('logName');
+       
+       console.log(localStorage.getItem('logRole')); 
+       
+       this.rolee=localStorage.getItem('logRole')
+       this.isAdmin = this.rolee== "1" ? true:false;
+       this.photourl=localStorage.getItem('logUrl')
+
+
+       
+
+       this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
+      this.userIcon = this.photourl ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
+
+
     }
   
 
@@ -83,7 +110,7 @@ export class FullComponent {
     }
   ]
   sidebarMenu:any = null;
-  userName:string= "";
+  userName:any;
 
   onChangePassword() : void{
     this._router.navigate(['/change-password']);
@@ -99,11 +126,10 @@ export class FullComponent {
     
      // console.log("testting2365");
     localStorage.setItem('UpdateSt','');
-   // this.afAuth.signOut() ; 
+    this.afAuth.signOut() ; 
     this._router.navigate(['/login']);
     
+  } 
 
-    
-    
-  }
+
 }

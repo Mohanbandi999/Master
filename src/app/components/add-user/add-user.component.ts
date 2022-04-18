@@ -78,7 +78,7 @@ export class AddUserComponent implements OnInit {
   
   signUpForm = new FormGroup({
       
-      firstName:new FormControl('',Validators.required),
+      firstName:new FormControl('',[Validators.required ,Validators.pattern('[a-zA-Z][a-zA-Z ]+')]),
       lastName:new FormControl(''),
       email:new FormControl('', [Validators.email,Validators.required]),
       //password: new FormControl('',[ Validators.required,Validators.minLength(8)]),
@@ -86,7 +86,7 @@ export class AddUserComponent implements OnInit {
       doj:new FormControl('', Validators.required),
       dob:new FormControl(''),
       officeEmail:new FormControl('',Validators.email),
-      phone:new FormControl('',[ Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      phone:new FormControl('',[ Validators.required,Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]),
       project:new FormControl(''),
       address:new FormControl(''),
       skillSet:new FormControl(''),
@@ -231,13 +231,16 @@ export class AddUserComponent implements OnInit {
         this.signUpForm.value.project,
         this.signUpForm.value.address,
         this.signUpForm.value.skillSet,
-        )
-        
-        
-        this.error="Successfully created user";
-        setTimeout(() => {this.error="";}, 2000);  //5s
-
-
+        ).then((result) => {
+          this.error="Successfully created user";
+            setTimeout(() => {this.error="";}, 3000);  //5s        
+        })               
+        .catch((err) => {         
+            this.error="Mail is already exist";
+            setTimeout(() => {this.error="";}, 3000);  //5s
+        });        
+        //this.error="Successfully created user";
+        //setTimeout(() => {this.error="";}, 2000);  //5s
         localStorage.setItem('UpdateSt','Yes');        
     }  
     
