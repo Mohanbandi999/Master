@@ -18,13 +18,14 @@ export class TimesheetService {
     return this.firestore.collection('timesheet').snapshotChanges();
 }
 saveupdateSheetList(timeSheet: timesheetInfo){  
-    //alert(timeSheet.hours);
+  
    if(timeSheet.id==0 || timeSheet.id==null || timeSheet.id=='') 
-   {
+   {     
       this.firestore.collection('timesheet').add(timeSheet);
       alert("Inserted Successfully");
    }
    else{
+    //alert(timeSheet.id);
      this.firestore.doc('timesheet/'+timeSheet.id).update(timeSheet);
    alert("Updated Successfully")
    }     
