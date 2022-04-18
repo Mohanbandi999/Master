@@ -1,38 +1,18 @@
 import { Component, OnInit,Input,Output,EventEmitter,OnChanges } from '@angular/core';
-
 import { Router } from '@angular/router';
-
-//Add Changes
-import {
- // Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-
-
-
-
-
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import {ChangeDetectionStrategy,ViewChild,TemplateRef,} from '@angular/core';
+import {startOfDay,endOfDay,subDays,addDays,endOfMonth,isSameDay, isSameMonth, addHours, getDate,} from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView,} from 'angular-calendar';
 import startOfISOWeekYear from 'date-fns/startOfISOWeekYear';
+import { TimesheetService } from '../services/timesheet.service';
+import { timesheetInfo } from '../models/timesheet-data';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { id } from 'date-fns/locale';
+import { DatePipe } from '@angular/common';
+
+
 
 const colors: any = {
   red: {
@@ -69,100 +49,27 @@ const colors: any = {
   //styleUrls: ['./time-sheet.component.scss']
 })
 export class TimeSheetComponent implements OnInit {
-
-
-
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
-  // modalData: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
+  
   refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      //end: addDays(endOfMonth(new Date()), 3),
-      title: 'Test',
-      //color: colors.blue,
-      //allDay: true,
-    }
+  events: CalendarEvent[] = [  
   ];
+  
   
 
   activeDayIsOpen: boolean = true;
-
-  //constructor(private modal: NgbModal) {}
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
-  handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-  }
+  sheetList:any;
+  //showListDate:any;
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
+    this.sheetList = [
+      ...this.sheetList,
       {
-        title: 'No of hours',
+        title: '',
         start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        
+        end: endOfDay(new Date()),        
         color: colors.red,
         draggable: true,
         resizable: {
@@ -186,32 +93,12 @@ export class TimeSheetComponent implements OnInit {
   }
   //End
 
-
-
+  selectedDate = new Date();
   date = new Date();
-  myDate = new Date();
 
-  
-  // onDataChange(newdate) {
-  //   const _ = moment();
-  //   const date = moment(newdate).add({hours: _.hour(), minutes:_.minute() , seconds:_.second()})
-  //   this.date = date.toDate();
-  //   console.log({hours: _.hour(), minutes:_.minute() , seconds:_.second()})
-  // }
 
-  // myFunction(){
-  //   this.date=new Date();
-  //   let latest_date =this.datepipe.transform(this.date, 'yyyy-MM-dd');
-  //  }
-
-//   parseDate(dateString: string): Date {
-//     if (dateString) {
-//         return new Date(dateString);
-//     }
-//     return this.date;
-// }
-
-  constructor() { }
+  myDate = new Date();  
+  constructor(private timesheetService : TimesheetService,public firestore: AngularFirestore) { }
   //date1 = new Date((new Date().getTime() - 3888000000));
   maxDate = new Date();
   curDate = new Date();
@@ -220,26 +107,116 @@ export class TimeSheetComponent implements OnInit {
   weekStart = new Date(this.maxDate.valueOf() - (this.d<=0 ? 7-this.startDay:this.d-this.startDay)*86400000); //rewind to start day
   weekEnd = new Date(this.weekStart.valueOf() + 6*86400000); //add 6 days to get last day  
   weekStarttemp = this.weekStart;
+  tasks:any;
+
+
   ngOnInit(): void {
   this.myDate.setDate(this.date.getDate() + 7);
+ this.fetchData();   
+
+  //this.tasks = this.db.collection(config.collection_endpoint).valueChanges();
+
+
+
+  } 
+  // onChangeEvent(event:any){    
+  //   let temp = this.weekStart.getDate();      
+  //   for(let i=0; i<6;i++){      
+            
+  //       if( temp <= this.maxDate.getDate())
+  //       {  let dd;     if(i == 2)  {
+  //         dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + 1));          
+  //       }else{
+  //          dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + i));
+  //       }
+  //         //console.log(dd);
+  //         let m = dd.getMonth()+1;
+  //         console.log(dd.getDate()+'/'+m+'/'+dd.getFullYear());
+  //       }
+  //       this.weekStarttemp = this.weekStart;
+  //   }
+
+  // }
+
+  //New
+
+  convert(str:any) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
+  }   
+
+  fetchData() {
+    this.timesheetService.getSheetList().subscribe(data => {             
+      var selectedData= data.filter( (record) => {  
+      console.log(record.payload.doc.get("modified").toDate());      
+      //return this.convert(record.payload.doc.get("modified").toDate()) == this.convert("Thu Apr 14 2022 12:30:00 GMT+0530 (India Standard Time)");  
+      return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate);  
+     });  
+
+      this.sheetList = selectedData.map(e => {
+        console.log(e.payload.doc.get("modified").toDate());             
+        return {        
+          id: e.payload.doc.id,      
+          description:e.payload.doc.get("description"),
+          hours:e.payload.doc.get("hours"),
+          task:e.payload.doc.get("task"),
+          modified:e.payload.doc.get("modified").toDate(),          
+        } as timesheetInfo;
+     
+     })   
+    });  
+    
+  } 
+
+  onChangeEvent(event:any){ 
+   this.selectedDate = event.target.value;
+   this.fetchData();  
   }
 
- 
-  onChangeEvent(event:any){
-    let temp = this.weekStart.getDate();    
-    for(let i=0; i<6;i++){      
-            
-        if( temp <= this.maxDate.getDate())
-        {  let dd;     if(i == 2)  {
-          dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + 1));          
-        }else{
-           dd = new Date(this.weekStarttemp.setDate(this.weekStart.getDate() + i));
-        }
-          //console.log(dd);
-          let m = dd.getMonth()+1;
-          console.log(dd.getDate()+'/'+m+'/'+dd.getFullYear());
-        }
-        this.weekStarttemp = this.weekStart;
+
+
+
+
+
+  //NewEnd
+
+
+
+
+
+// fetchData() {
+//   this.timesheetService.getSheetList().subscribe(data => { 
+//     this.sheetList = data.map(e => {
+//       //alert(this.eventsList.id);
+//       return {        
+//         id: e.payload.doc.id,      
+//         task:e.payload.doc.get("task"),
+//         description:e.payload.doc.get("description"),
+//         hours:e.payload.doc.get("hours"),
+//         modified:e.payload.doc.get("modified").toDate(),     
+//       } as timesheetInfo;     
+//     })   
+//   });  
+// } 
+//save
+update(timesht: timesheetInfo) {
+ // alert("test");
+  this.timesheetService.saveupdateSheetList(timesht);
+ // alert('The events was Updated successfully!');
+}
+
+delete(id: string) {
+  this.timesheetService.deleteEvent(id);     
+  alert('The events was Deleted');
+  this.ngOnInit();  
+//New start
+  for(let i = 0; i < this.sheetList.length; ++i){
+    if (this.sheetList[i].id === id) {
+        this.sheetList.splice(i,1);
     }
-  }
+}
+}
+
 }
