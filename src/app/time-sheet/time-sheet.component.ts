@@ -11,6 +11,9 @@ import { timesheetInfo } from '../models/timesheet-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { id } from 'date-fns/locale';
 import { DatePipe } from '@angular/common';
+//import { UserService } from '../services/user.service';
+
+
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -65,7 +68,7 @@ export class TimeSheetComponent implements OnInit {
         description:'',
         hours:'',
         modified: this.selectedDate,
-        userId:'123',
+        userId:'',
 
       },
     ];
@@ -88,6 +91,7 @@ export class TimeSheetComponent implements OnInit {
   date = new Date();
   myDate = new Date();  
   constructor(private timesheetService : TimesheetService,public firestore: AngularFirestore) { }
+  //,public userService:UserService
   //date1 = new Date((new Date().getTime() - 3888000000));
   maxDate = new Date();
   curDate = new Date();
@@ -136,6 +140,15 @@ export class TimeSheetComponent implements OnInit {
    this.fetchData();  
   }
 update(timesht: timesheetInfo) { 
+   //new
+  //  this.userService.setSession('UserId', timesht.userId);
+  //  let userId= this.userService.getSession('UserId');
+   //new end
+   //alert(userId);
+   //new end
+  //this.userService.getAllUsers()
+  const user = localStorage.getItem('currentUser');
+  alert(user);
   this.timesheetService.saveupdateSheetList(timesht); 
 }
 delete(id: string) {
