@@ -63,9 +63,13 @@ export class LoginComponent implements OnInit {
           {
             
             this.userService.selectedUser = res[i];
+            localStorage.setItem('userdata',JSON.stringify(this.userService.selectedUser));
             localStorage.setItem('logRole',this.userService.selectedUser.role);
+            localStorage.setItem('currentUser',this.userService.selectedUser.uid);
             localStorage.setItem('logName',this.userService.selectedUser.firstName);
-            localStorage.setItem('logUrl',this.userService.selectedUser.photoUrl);
+            localStorage.setItem('logUrl',this.userService.selectedUser.photoURL);
+            localStorage.setItem('logUrltime',this.userService.selectedUser.photoURL);
+            console.log(this.userService.selectedUser);
 
             //this.userName = this.selectedUser.displayName;
             break;
@@ -92,7 +96,9 @@ export class LoginComponent implements OnInit {
         }
         else{
           
-          this.userService.editSelectedUser=this.userService.selectedUser;
+         // this.userService.editSelectedUser=this.userService.selectedUser;
+         this.userService.editSelectedUser=JSON.parse(localStorage.getItem('userdata')!)
+         console.log(this.userService.editSelectedUser);
           this.router.navigate(['/user-detail']);
         }
         

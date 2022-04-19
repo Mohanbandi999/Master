@@ -73,8 +73,10 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.populateForm(this.userService.editSelectedUser); 
-    this.photoURL;
+   // this.populateForm(this.userService.editSelectedUser); 
+      this.populateForm(JSON.parse(localStorage.getItem('userdata')!))
+      this.photoURL=localStorage.getItem('logUrl');
+
 
 
 

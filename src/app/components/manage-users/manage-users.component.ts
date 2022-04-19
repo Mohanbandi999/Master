@@ -56,6 +56,9 @@ export class ManageUsersComponent implements OnInit {
         if(id == res[i].uid)
         {          
           this.userService.editSelectedUser = res[i];
+          //
+          localStorage.setItem('userdata', JSON.stringify(this.userService.editSelectedUser));
+          localStorage.setItem('logUrl',this.userService.editSelectedUser.photoURL)
                                                              // this.userService.populateForm(res[i]);
           console.log(res[i]);
                                                              // this._router.navigate(['/user-detail']);

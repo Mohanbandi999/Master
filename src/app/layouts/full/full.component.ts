@@ -44,7 +44,7 @@ export class FullComponent {
       //this.userName = this.userService.selectedUser?.firstName;
       //this.isAdmin = this.userService.selectedUser?.role == "1" ? true:false;      
       //this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
-      this.userIcon = this.userService.selectedUser?.photoURL ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
+      //this.userIcon = this.userService.selectedUser?.photoURL ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
     
       // alert(this.userService.selectedUser?.firstName);
        //localStorage.setItem('userName', this.userService.selectedUser?.firstName);
@@ -56,15 +56,12 @@ export class FullComponent {
        
        this.rolee=localStorage.getItem('logRole')
        this.isAdmin = this.rolee== "1" ? true:false;
-       this.photourl=localStorage.getItem('logUrl')
-
-
-       
+       this.photourl=localStorage.getItem('logUrltime');
+       console.log(localStorage.getItem('logUrltime'));
 
        this.sidebarMenu= this.isAdmin ? this.adminSideBarMenu : this.userSideBarMenu;
-      this.userIcon = this.photourl ? this.userService.selectedUser?.photoURL : "assets/images/user2.webp";
 
-
+      this.userIcon = this.photourl ? this.photourl : "assets/images/user2.webp";
     }
   
 
@@ -121,15 +118,9 @@ export class FullComponent {
     this._router.navigate(['/user-detail']);
   }
 
-  onLogout() : void{ 
+  onLogout(){ 
 
-    
-     // console.log("testting2365");
-    localStorage.setItem('UpdateSt','');
-    this.afAuth.signOut() ; 
-    this._router.navigate(['/login']);
-    
+    localStorage.setItem('UpdateSt','');   
+    this._router.navigate(['/login']);    
   } 
-
-
 }
