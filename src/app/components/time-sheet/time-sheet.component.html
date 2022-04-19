@@ -1,0 +1,63 @@
+<h2>Time Sheet</h2>
+
+<h3 style="color:blue;">   
+  <!-- <button class="btn btn-primary float-right"  >Date Picker:<input type="date" name="myDate" (change)="selectDate()" ></button> -->
+  <mat-form-field style="float: right;">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="curDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onChangeEvent($event)" >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ></mat-datepicker>
+  </mat-form-field>  
+  <div class="clearfix"></div>  
+ 
+  
+</h3>
+<button class="btn btn-primary float-right" (click)="addEvent()">
+  Add new
+</button>
+<br/><br/><br/>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>          
+        <th>Task</th>
+        <th>Description</th>
+        <th>Hours</th>  
+        <th colspan="2">Action</th>   
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let list of sheetList">              
+        <td>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="list.task"
+            (keyup)="refresh.next()"
+          />
+        </td>
+        <td>  <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="list.description"
+          (keyup)="refresh.next()"
+        /></td>
+        <td><input
+          type="text"
+          class="form-control"
+          [(ngModel)]="list.hours"
+          (keyup)="refresh.next()"
+        />
+        </td>   
+        <td> <button  class="btn btn-primary active" (click)="update(list)">Save</button> </td>
+        <td><button id="remove" class="btn btn-danger" (click)="delete(list.id)">Delete</button></td>          
+      </tr>
+      
+    </tbody>    
+  </table>
+</div>
+<div>
+
+<!-- <div>{{sheetList.task}}</div> -->
+
+                                  

@@ -69,6 +69,8 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('logName',this.userService.selectedUser.firstName);
             localStorage.setItem('logUrl',this.userService.selectedUser.photoURL);
             localStorage.setItem('logUrltime',this.userService.selectedUser.photoURL);
+            localStorage.setItem('logProject',this.userService.selectedUser.project);
+
             console.log(this.userService.selectedUser);
 
             //this.userName = this.selectedUser.displayName;

@@ -26,6 +26,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { LoginComponent } from './login/login.component';
+import { TimeSheetComponent } from './time-sheet/time-sheet.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -38,6 +39,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet.component';
 //End
 
 
@@ -68,6 +70,8 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     VmDetailsComponent,
     AddVmComponent,
     ResetPasswordComponent,
+    TimeSheetComponent,
+    ApproveTimesheetComponent
    
   ],
   imports: [

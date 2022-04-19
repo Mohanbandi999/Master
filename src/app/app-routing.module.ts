@@ -29,7 +29,9 @@ import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VmDetailsComponent } from './components/vm-details/vm-details.component';
 import { AddVmComponent } from './components/add-vm/add-vm.component';
-import {ResetPasswordComponent} from './components/reset-password/reset-password.component'
+import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import { TimeSheetComponent } from './components/time-sheet/time-sheet.component';
+import { ApproveTimesheetComponent } from './components/approve-timesheet/approve-timesheet.component';
 
 
 
@@ -85,6 +87,10 @@ const routes: Routes = [
       {path:"vm-details",component:VmDetailsComponent},
       {path:"add-vm",component:AddVmComponent},
       {path:"reset-password",component:ResetPasswordComponent},
+      {path:"time-sheet",component:TimeSheetComponent},
+      {path:"approve-timesheet",component:ApproveTimesheetComponent},
+
+
       //{path:"home", component:DashboardComponent},
       //{path:"**", redirectTo:"/home", pathMatch:"full"},
       
