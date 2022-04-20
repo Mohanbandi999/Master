@@ -1,7 +1,9 @@
 export class leaveinfo {        
     id?: any;
     leavetype?: string;
-    leavereason?: Date;
-     datefrom?: string;
-     dateto?: any;    
+    leavereason?: string;
+     datefrom?: Date;
+     dateto?: Date;  
+     status?:any;  
+     userId?:any
    }

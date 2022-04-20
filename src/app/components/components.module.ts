@@ -27,9 +27,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { AddUserComponent } from './add-user/add-user.component';
 import { LoginComponent } from './login/login.component';
 import { TimeSheetComponent } from './time-sheet/time-sheet.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { VmDetailsComponent } from './vm-details/vm-details.component';
 import { AddVmComponent } from './add-vm/add-vm.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -41,6 +39,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet.component';
 import { ApplyleaveComponent } from './applyleave/applyleave.component';
+import { ApproveLeaverequestComponent } from './approve-leaverequest/approve-leaverequest.component'; 
 //End
 
 
@@ -73,7 +72,8 @@ import { ApplyleaveComponent } from './applyleave/applyleave.component';
     ResetPasswordComponent,
     TimeSheetComponent,
     ApproveTimesheetComponent,
-    ApplyleaveComponent
+    ApplyleaveComponent,
+    ApproveLeaverequestComponent
    
   ],
   imports: [

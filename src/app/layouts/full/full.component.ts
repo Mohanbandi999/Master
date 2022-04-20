@@ -97,6 +97,11 @@ export class FullComponent {
       link: "/approve-timesheet",
       icon: "layout",
       menu: "Approve Timesheet",
+    },
+    {
+      link: "/approve-leaverequest",
+      icon: "layout",
+      menu: "Approve Leave",
     }
 
   ]

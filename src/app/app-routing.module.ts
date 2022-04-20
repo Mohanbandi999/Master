@@ -33,7 +33,7 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
 import { TimeSheetComponent } from './components/time-sheet/time-sheet.component';
 import { ApproveTimesheetComponent } from './components/approve-timesheet/approve-timesheet.component';
 import { ApplyleaveComponent } from './components/applyleave/applyleave.component';
-
+import { ApproveLeaverequestComponent } from './components/approve-leaverequest/approve-leaverequest.component';
 
 
 const routes: Routes = [
@@ -90,8 +90,8 @@ const routes: Routes = [
       {path:"reset-password",component:ResetPasswordComponent},
       {path:"time-sheet",component:TimeSheetComponent},
       {path:"approve-timesheet",component:ApproveTimesheetComponent},
-      {path:"applyleave",component:ApplyleaveComponent}
-
+      {path:"applyleave",component:ApplyleaveComponent},
+      {path:"approve-leaverequest",component:ApproveLeaverequestComponent}
 
       //{path:"home", component:DashboardComponent},
       //{path:"**", redirectTo:"/home", pathMatch:"full"},
