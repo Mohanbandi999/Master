@@ -34,6 +34,7 @@
             class="form-control"
             [(ngModel)]="list.task"
             (keyup)="refresh.next()"
+            [disabled]="list.status == 'Approved'"
           />
         </td>
         <td>  <input
@@ -41,16 +42,18 @@
           class="form-control"
           [(ngModel)]="list.description"
           (keyup)="refresh.next()"
+          [disabled]="list.status == 'Approved'"
         /></td>
         <td><input
           type="text"
           class="form-control"
           [(ngModel)]="list.hours"
           (keyup)="refresh.next()"
+          [disabled]="list.status == 'Approved'"
         />
         </td>   
-        <td> <button  class="btn btn-primary active" (click)="update(list)">Save</button> </td>
-        <td><button id="remove" class="btn btn-danger" (click)="delete(list.id)">Delete</button></td>          
+        <td> <button  class="btn btn-primary active" [disabled]="list.status == 'Approved'" (click)="update(list)">Save</button> </td>
+        <td><button id="remove" class="btn btn-danger" [disabled]="list.status == 'Approved'" (click)="delete(list.id)">Delete</button></td>          
       </tr>
       
     </tbody>    

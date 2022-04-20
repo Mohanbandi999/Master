@@ -40,6 +40,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet.component';
+import { ApplyleaveComponent } from './applyleave/applyleave.component';
 //End
 
 
@@ -71,7 +72,8 @@ import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet
     AddVmComponent,
     ResetPasswordComponent,
     TimeSheetComponent,
-    ApproveTimesheetComponent
+    ApproveTimesheetComponent,
+    ApplyleaveComponent
    
   ],
   imports: [

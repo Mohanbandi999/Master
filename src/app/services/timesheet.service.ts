@@ -17,6 +17,9 @@ export class TimesheetService {
     //alert("serv");
     return this.firestore.collection('timesheet').snapshotChanges();
 }
+saveApproveSheetList(timeSheet: timesheetInfo){  
+  this.firestore.doc('timesheet/'+timeSheet.id).update(timeSheet);  
+}
 saveupdateSheetList(timeSheet: timesheetInfo){  
   
    if(timeSheet.id==0 || timeSheet.id==null || timeSheet.id=='') 

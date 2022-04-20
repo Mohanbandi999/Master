@@ -104,8 +104,10 @@ export class TimeSheetComponent implements OnInit {
   weekStarttemp = this.weekStart;
   tasks:any;
   ngOnInit(): void {
-  this.myDate.setDate(this.date.getDate() + 7);
- this.fetchData();   
+  //this.myDate.setDate(this.date.getDate() + 7);
+  this.selectedDate = new Date();
+  this.fetchData(); 
+  this.onChangeEvent(this.selectedDate);  
   }  
 
   //New
@@ -121,7 +123,7 @@ export class TimeSheetComponent implements OnInit {
       var selectedData= data.filter( (record) => {  
       console.log(record.payload.doc.get("modified").toDate());      
       //return this.convert(record.payload.doc.get("modified").toDate()) == this.convert("Thu Apr 14 2022 12:30:00 GMT+0530 (India Standard Time)");  
-      return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate);  
+      return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('currentUser') == record.payload.doc.get("userId");  
      });  
 
       this.sheetList = selectedData.map(e => {
@@ -133,6 +135,7 @@ export class TimeSheetComponent implements OnInit {
           task:e.payload.doc.get("task"),
           modified:e.payload.doc.get("modified").toDate(),
           userId:e.payload.doc.get("userId"),          
+          status:e.payload.doc.get("status"),
         } as timesheetInfo;     
      })   
     });      

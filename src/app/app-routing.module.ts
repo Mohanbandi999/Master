@@ -32,6 +32,7 @@ import { AddVmComponent } from './components/add-vm/add-vm.component';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import { TimeSheetComponent } from './components/time-sheet/time-sheet.component';
 import { ApproveTimesheetComponent } from './components/approve-timesheet/approve-timesheet.component';
+import { ApplyleaveComponent } from './components/applyleave/applyleave.component';
 
 
 
@@ -89,6 +90,7 @@ const routes: Routes = [
       {path:"reset-password",component:ResetPasswordComponent},
       {path:"time-sheet",component:TimeSheetComponent},
       {path:"approve-timesheet",component:ApproveTimesheetComponent},
+      {path:"applyleave",component:ApplyleaveComponent}
 
 
       //{path:"home", component:DashboardComponent},

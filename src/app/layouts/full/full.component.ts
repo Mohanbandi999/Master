@@ -120,7 +120,13 @@ export class FullComponent {
       link: "/time-sheet",
       icon: "layout",
       menu: "Time Sheet",
+    },
+    {
+      link: "/applyleave",
+      icon: "layout",
+      menu: "Leave Request",
     }
+
   ]
   sidebarMenu:any = null;
   userName:any;
