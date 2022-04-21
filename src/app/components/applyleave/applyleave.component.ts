@@ -103,26 +103,31 @@ export class ApplyleaveComponent implements OnInit {
     
     this.error="Leave Request succesfully Submitted"
     setTimeout(() => {this.error="";}, 3000);
-    this.ngOnInit();
-    
    }
 
    getleaves(){
     //for(let i=0;i<this.customerArray.length;i++)
     //{
-      this.customerArray=  [];
+      
     //}
+   // this.customerArray=[];
     this.leaveservice.getleaves().subscribe(res=>{
+      
       for(var i=0;i<res.length;i++)
       {
+        
         if(localStorage.getItem('currentUser')==res[i].id){
           console.log(res[i]); 
-          this.customerArray.push(res[i]);    
-        }                      
-      }         
+          this.customerArray.push(res[i]);     
+        }}                        
+               
           this.dataleave =new MatTableDataSource(this.customerArray);
           //console.log(this.dataleave.data);
          // this.customerArray=this.dataleave.data;
+
+    
+
+
     })
    }
 
