@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { leaveinfo } from '../models/leave-data';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { filter, from, map, Observable, of, switchMap } from 'rxjs';
+import { id } from 'date-fns/locale';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +30,16 @@ export class LeaveService {
         )
       )   
   }
+
+
+  getLeaveList() {  
+    //alert("serv");
+    return this.firestore.collection('leaves').snapshotChanges();
+}
+
+saveupdateSheetList(leaveInfo: leaveinfo){   
+    this.firestore.doc('leaves/'+leaveInfo.id).update(leaveInfo);
+  alert("Updated Successfully")
+ // }     
+ }
 }

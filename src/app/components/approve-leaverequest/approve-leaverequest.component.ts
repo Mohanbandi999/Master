@@ -97,7 +97,7 @@ export class ApproveLeaverequestComponent implements OnInit {
    
    console.log(this.selectedCheck);
 }
-approve(timesht: leaveinfo) {    
+approve(timesht: leaveinfo) { 
    
   for (let i = 0; i < this.selectedCheck.length; i++) {
     console.log(this.selectedCheck[i]);
@@ -108,7 +108,7 @@ approve(timesht: leaveinfo) {
       }
     }
   }  
-    alert("Updated Successfully")
+    //alert("Updated Successfully")
 }
 
 
