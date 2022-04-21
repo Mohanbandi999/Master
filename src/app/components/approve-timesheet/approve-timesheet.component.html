@@ -1,6 +1,27 @@
+
+<div style="display:inline ;">
 <h2>Approve Time Sheet</h2>
+<h3>
+<div>
+  <!-- <label for="website">Website:</label> -->
+  <!-- <label>User</label> -->
+  <select style="float: right;width: 220px;"  formControlName="userName" (change)="changeUser($event)" aria-placeholder="select">
+  <!-- <option value="" >Choose User</option> -->
+  <!-- <option value="?" selected="selected">Choose User</option> -->
+  <option [ngValue]="null" [disabled]="true" >Select User</option>
+  <option *ngFor="let user of approveSheetList" [ngValue]="user.userId">   
+    {{ user.userName }}
+  </option>
+</select></div>
+<div class="space">
+</div></h3>
+</div>
+
 
 <h3 style="color:blue;">   
+
+  
+  
   <!-- <button class="btn btn-primary float-right"  >Date Picker:<input type="date" name="myDate" (change)="selectDate()" ></button> -->
   <mat-form-field style="float: right;">
     <input matInput [matDatepicker]="picker" [(ngModel)]="curDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onChangeEvent($event)" >
@@ -8,8 +29,8 @@
     <mat-datepicker #picker ></mat-datepicker>
   </mat-form-field>  
   <div class="clearfix"></div>  
- 
-  
+
+
 </h3>
 
 <button class="btn btn-primary float-right" (click)="approve(approveSheetList)" >Approve</button>

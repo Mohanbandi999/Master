@@ -1,3 +1,5 @@
+import { AnySoaRecord } from "dns";
+
 export class timesheetInfo {        
    id?: any;
    description?: string;
@@ -7,4 +9,5 @@ export class timesheetInfo {
     hours?:string;
     status?: any ;
     project?:any;  
+    userName?:any;
   }

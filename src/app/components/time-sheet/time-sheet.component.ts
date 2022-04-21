@@ -124,6 +124,7 @@ export class TimeSheetComponent implements OnInit {
       console.log(record.payload.doc.get("modified").toDate());      
       //return this.convert(record.payload.doc.get("modified").toDate()) == this.convert("Thu Apr 14 2022 12:30:00 GMT+0530 (India Standard Time)");  
       return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('currentUser') == record.payload.doc.get("userId");  
+     
      });  
 
       this.sheetList = selectedData.map(e => {
@@ -136,6 +137,8 @@ export class TimeSheetComponent implements OnInit {
           modified:e.payload.doc.get("modified").toDate(),
           userId:e.payload.doc.get("userId"),          
           status:e.payload.doc.get("status"),
+        userName:e.payload.doc.get("userName")
+
         } as timesheetInfo;     
      })   
     });      
@@ -144,21 +147,15 @@ export class TimeSheetComponent implements OnInit {
    this.selectedDate = event.target.value;
    this.fetchData();  
   }
-update(timesht: timesheetInfo) { 
-   //new
-  //  this.userService.setSession('UserId', timesht.userId);
-  //  let userId= this.userService.getSession('UserId');
-   //new end
-   //alert(userId);
-   //new end
-  //this.userService.getAllUsers()
+update(timesht: timesheetInfo) {    
   //const user = localStorage.getItem('currentUser');
-  
+  timesht.userName=localStorage.getItem('logName'); 
   timesht.userId = localStorage.getItem('currentUser'); 
   timesht.status= "pending" ;
   timesht.project= localStorage.getItem('logProject');
   this.timesheetService.saveupdateSheetList(timesht); 
-
+  console.log(timesht.userName);
+  console.log(timesht.userId);
 }
 delete(id: string) {
   this.timesheetService.deleteEvent(id);     

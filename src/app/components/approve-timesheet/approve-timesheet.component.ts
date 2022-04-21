@@ -10,7 +10,6 @@ import { id } from 'date-fns/locale';
 import { MatTableDataSource } from '@angular/material/table';
 
 
-
 @Component({
   selector: 'app-approve-timesheet',
   templateUrl: './approve-timesheet.component.html',
@@ -21,9 +20,9 @@ export class ApproveTimesheetComponent implements OnInit {
   maxDate = new Date();
   curDate = new Date();
   selectedCheck: any=[];
-
   approveSheetList:any;
   form: any;
+  UserList: any;
 
 
   constructor(private timesheetService:TimesheetService) { }
@@ -50,8 +49,12 @@ export class ApproveTimesheetComponent implements OnInit {
       var selectedData= data.filter( (record) => {  
       console.log(record.payload.doc.get("modified").toDate());      
       //return this.convert(record.payload.doc.get("modified").toDate()) == this.convert("Thu Apr 14 2022 12:30:00 GMT+0530 (India Standard Time)");  
-      return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('logProject') == record.payload.doc.get("project") && localStorage.getItem('currentUser') != record.payload.doc.get("userId");  
-     });  
+   //  return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('logProject') == record.payload.doc.get("project") && localStorage.getItem('currentUser') != record.payload.doc.get("userId"); 
+   return this.convert(record.payload.doc.get("modified").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('logProject') == record.payload.doc.get("project") && localStorage.getItem('currentUser') != record.payload.doc.get("userId") 
+   && localStorage.getItem('logName') != record.payload.doc.get("userName");  
+  
+  
+  });  
 
       this.approveSheetList = selectedData.map(e => {
         console.log(e.payload.doc.get("modified").toDate());             
@@ -62,7 +65,8 @@ export class ApproveTimesheetComponent implements OnInit {
           task:e.payload.doc.get("task"),
           modified:e.payload.doc.get("modified").toDate(),
           userId:e.payload.doc.get("userId"),   
-         status:e.payload.doc.get("status"),       
+         status:e.payload.doc.get("status"),  
+         userName:e.payload.doc.get("userName")     
         } as timesheetInfo;     
      })   
     });      
@@ -116,20 +120,19 @@ onCheckboxChange(event:any)
   if(index==-1)
   {
   
-    this.selectedCheck.push(event.target.value);
-   
-  //  this.selectedCheck.push(list.value);
+    this.selectedCheck.push(event.target.value);  
   }
-  else{
-    //event.target.value="pending"
-    this.selectedCheck.splice(index,1)
-   // event.target.value="pending"
-   //this.selectedCheck.push(event.target.value);
+  else{ 
+    this.selectedCheck.splice(index,1) 
   }
     console.log(this.selectedCheck);
 }
 
-
+changeUser(e: any) {
+  this.UserList?.setValue(e.target.value, {
+    onlySelf: true,
+  });
+}
 
 }
 
