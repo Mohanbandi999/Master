@@ -1,0 +1,62 @@
+<!-- Daily Activity -->
+<mat-card class="w-100">
+    <mat-card-content>
+      <h4 class="mb-16">Leaves List</h4>
+
+      <span ><a  class="btn-link"   >    Total leaves    :12</a>             </span>  
+              <span ><a  class="btn-linkk"  >    Applied  leaves :{{dayscout}}</a>    </span> 
+              <span ><a  class="btn-linkkk" >    Remaining leaves:{{12-dayscout}}</a>  </span> 
+  
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataleave" class="text-nowrap w-100">
+  
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Leave type</th>
+            <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.leavetype}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="reason">
+            <th mat-header-cell *matHeaderCellDef>Leave Reason</th>
+            <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.leavereason}} </td>
+          </ng-container>
+  
+          <!-- Project Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>From Date</th>
+            <td mat-cell *matCellDef="let element">
+              <p class="mb-0 fw-medium">{{element.datefrom}}</p>
+            </td>
+          </ng-container>
+  
+          <!-- Priority Column -->
+          <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef> To Date </th>
+            <td mat-cell *matCellDef="let element">                      
+                <p class="mb-0 fw-medium ">{{element.dateto}}</p>
+                <!-- <span class="badge {{element.isActive}} rounded-pill">{{element.isActive}</span> -->
+            </td>
+          </ng-container>
+
+           <!-- view Column -->
+           <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              <p class="mb-0 fw-medium">{{element.status}}</p>
+              <!-- <button mat-raised-button class="me-1 mb-1" (click)="onView()" color="primary">View</button> -->
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+             <!-- <button mat-raised-button class="me-1 mb-1" color="primary">Delete</button>-->
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>

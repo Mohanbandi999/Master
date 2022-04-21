@@ -130,6 +130,11 @@ export class FullComponent {
       link: "/applyleave",
       icon: "layout",
       menu: "Leave Request",
+    },
+    {
+      link: "/leaves-list",
+      icon: "layout",
+      menu: "Leaves List",
     }
 
   ]

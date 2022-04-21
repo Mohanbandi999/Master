@@ -39,7 +39,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet.component';
 import { ApplyleaveComponent } from './applyleave/applyleave.component';
-import { ApproveLeaverequestComponent } from './approve-leaverequest/approve-leaverequest.component'; 
+import { ApproveLeaverequestComponent } from './approve-leaverequest/approve-leaverequest.component';
+import { LeavesListComponent } from './leaves-list/leaves-list.component'; 
 //End
 
 
@@ -73,7 +74,8 @@ import { ApproveLeaverequestComponent } from './approve-leaverequest/approve-lea
     TimeSheetComponent,
     ApproveTimesheetComponent,
     ApplyleaveComponent,
-    ApproveLeaverequestComponent
+    ApproveLeaverequestComponent,
+    LeavesListComponent
    
   ],
   imports: [

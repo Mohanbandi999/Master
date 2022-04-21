@@ -23,26 +23,15 @@ import { AngularFireList } from '@angular/fire/compat/database';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-applyleave',
-  templateUrl: './applyleave.component.html',
-  styleUrls: ['./applyleave.component.scss']
+  selector: 'app-leaves-list',
+  templateUrl: './leaves-list.component.html',
+  styleUrls: ['./leaves-list.component.scss']
 })
-export class ApplyleaveComponent implements OnInit {
+export class LeavesListComponent implements OnInit {
 
-
-  error="";
   
-  leaveform=new FormGroup({
-       leavetype:new FormControl('',Validators.required),
-       leavereason:new FormControl('',Validators.required),    
-       datefrom:new FormControl('', Validators.required),
-       dateto:new FormControl('',Validators.required),
-       days:new FormControl('',[ Validators.required,Validators.max(8)]),
-       id:new FormControl(localStorage.getItem('currentUser')),
-       status: new FormControl('pending'),
-         
-  })
-
+  
+  
 
   checked = true;  
   hide = true;
@@ -62,14 +51,9 @@ export class ApplyleaveComponent implements OnInit {
 
   constructor(private leaveservice:LeaveService,private _router: Router, public afs:AngularFirestore ) { }
   
-  leavetypes =[ {id:"Planed",value:"Planed"},
-  {id:"sick",value:"Sick"},
-  {id:"Casual",value:"Casual"},
-  {id:"other",value:"Other"}];
+  
 
-  getToday(): string {
-    return new Date().toISOString().split('T')[0]
-  }
+  
 
 
   ngOnInit(): void {
@@ -84,31 +68,9 @@ export class ApplyleaveComponent implements OnInit {
 
   }
   
-  get leavetype(){
-    return this.leaveform.get('leavetype');
-   }
-  get datefrom(){
-    return this.leaveform.get('datefrom');
-   }
-  get dateto(){
-    return this.leaveform.get('dateto');
-   }
-  get leavereason(){
-    return this.leaveform.get('leavereason');
-   }
-   get days(){
-    return this.leaveform.get('days');
-   }
+  
 
-
-  submit(){
-    this.leaveservice.applyleavemethod(this.leaveform.value);
-    
-    this.leaveform.reset();
-    
-    this.error="Leave Request succesfully Submitted"
-    setTimeout(() => {this.error="";}, 3000);
-   }
+  
 
    getleaves(){
     this.customerArray=[];
@@ -157,11 +119,15 @@ export class ApplyleaveComponent implements OnInit {
      .subscribe( result => {
       for(var i=0;i<result.length;i++)
       {        
-        if(localStorage.getItem('currentUser')==result[i].id){          
-         this.dayss.push(Number(result[i].days));  
-         this.dayscout= this.dayss.reduce((a, b) => a + b, 0)         
+        if(localStorage.getItem('currentUser')==result[i].id){
+
+         this.dayss.push(Number(result[i].days));
+         console.log(this.dayss);
+         this.dayscout= this.dayss.reduce((a, b) => a + b, 0) 
+         console.log(this.dayscout);        
          }
         }
       })
     }    
 }
+

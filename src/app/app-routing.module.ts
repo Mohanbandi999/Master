@@ -34,6 +34,7 @@ import { TimeSheetComponent } from './components/time-sheet/time-sheet.component
 import { ApproveTimesheetComponent } from './components/approve-timesheet/approve-timesheet.component';
 import { ApplyleaveComponent } from './components/applyleave/applyleave.component';
 import { ApproveLeaverequestComponent } from './components/approve-leaverequest/approve-leaverequest.component';
+import { LeavesListComponent } from './components/leaves-list/leaves-list.component';
 
 
 const routes: Routes = [
@@ -91,7 +92,8 @@ const routes: Routes = [
       {path:"time-sheet",component:TimeSheetComponent},
       {path:"approve-timesheet",component:ApproveTimesheetComponent},
       {path:"applyleave",component:ApplyleaveComponent},
-      {path:"approve-leaverequest",component:ApproveLeaverequestComponent}
+      {path:"approve-leaverequest",component:ApproveLeaverequestComponent},
+      {path:"leaves-list",component:LeavesListComponent}
 
       //{path:"home", component:DashboardComponent},
       //{path:"**", redirectTo:"/home", pathMatch:"full"},

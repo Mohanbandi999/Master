@@ -5,5 +5,6 @@ export class leaveinfo {
      datefrom?: Date;
      dateto?: Date;  
      status?:any;  
-     userId?:any
+     userId?:any;
+     days?:number;
    }
