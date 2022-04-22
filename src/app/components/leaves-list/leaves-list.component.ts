@@ -46,7 +46,14 @@ export class LeavesListComponent implements OnInit {
   datasocU:any;
   customerArrayU:any[]=[];
   dayss:any[] = []; 
-  dayscout:any;
+  dayscout=0;
+
+  leaveslist:any;
+
+
+  dayslist:any[]=[];
+
+  
 
 
   constructor(private leaveservice:LeaveService,private _router: Router, public afs:AngularFirestore ) { }
@@ -58,8 +65,12 @@ export class LeavesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerArray=  [];   
-    this.getleaves();
-    this.lastuser();
+    //this.getleaves();
+    this.fetchData()
+    //this.lastuser();
+    this.fetchDataDays();
+    
+    
 
   }
   
@@ -79,6 +90,63 @@ export class LeavesListComponent implements OnInit {
           this.dataleave =new MatTableDataSource(this.customerArray);          
     })
    }
+
+   fetchData() {
+    this.leaveservice.getLeaveList().subscribe(data => {             
+      var selectedData= data.filter( (record) => {    
+     return localStorage.getItem('currentUser') == record.payload.doc.get("userId")  
+  });  
+
+      this.leaveslist = selectedData.map(e => {
+                     
+        return {        
+          id: e.payload.doc.id,                                                   
+          datefrom:e.payload.doc.get("datefrom"),
+          dateto:e.payload.doc.get("dateto"),
+          leavereason:e.payload.doc.get("leavereason"),
+          leavetype:e.payload.doc.get("leavetype"),
+          days:e.payload.doc.get("days"),
+          userId:e.payload.doc.get("userId"),   
+         status:e.payload.doc.get("status"),  
+         userName:e.payload.doc.get("userName")     
+        } as leaveinfo;     
+     })   
+     this.dataleave =new MatTableDataSource(this.leaveslist);
+     console.log(this.leaveslist);
+    });      
+  }
+
+
+  fetchDataDays() {
+    this.leaveservice.getLeaveList().subscribe(data => {             
+      var selectedData= data.filter( (record) => {    
+     return localStorage.getItem('currentUser') == record.payload.doc.get("userId")  
+  });  
+
+      this.dayslist = selectedData.map(e => {
+                     
+        return {        
+          id: e.payload.doc.id,                                                   
+          datefrom:e.payload.doc.get("datefrom"),
+          dateto:e.payload.doc.get("dateto"),
+          leavereason:e.payload.doc.get("leavereason"),
+          leavetype:e.payload.doc.get("leavetype"),
+          days:e.payload.doc.get("days"),
+          userId:e.payload.doc.get("userId"),   
+         status:e.payload.doc.get("status"),  
+         userName:e.payload.doc.get("userName")     
+        } as leaveinfo;     
+     })  
+     this.dayscout=this.dayslist.reduce(function (a,b) { return a + b.days; }, 0);
+     console.log(this.dayscout);
+     
+    });      
+  }
+
+  
+     
+
+
 
    onBack(): void {
     this._router.navigate(['/flexy/home']);
@@ -112,7 +180,7 @@ export class LeavesListComponent implements OnInit {
      .subscribe( result => {
       for(var i=0;i<result.length;i++)
       {        
-        if(localStorage.getItem('currentUser')==result[i].id){
+        if(localStorage.getItem('currentUser')==result[i].userId){
 
          this.dayss.push(Number(result[i].days));
          console.log(this.dayss);
