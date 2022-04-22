@@ -1,19 +1,27 @@
-<h2>Approve Time Sheet</h2>
 
-<h3 style="color:blue;">   
-  <!-- <button class="btn btn-primary float-right"  >Date Picker:<input type="date" name="myDate" (change)="selectDate()" ></button> -->
-  <mat-form-field style="float: right;">
+<div style="display:inline;">
+<h3>Approve Time Sheet</h3>
+
+<h4 style="color:blue;">   
+   
+  <select style="float: left; margin-top: 34px; width: 220px;"  formControlName="userName" (change)="changeUser($event)" aria-placeholder="select">    
+    <option [ngValue]="undefined" selected disabled="disabled">Select User</option>
+    <option *ngFor="let user of approveDropSheetList" [ngValue]="user.userId">   
+      {{ user.userName }}
+    </option>
+  </select>
+  <mat-form-field style="float: right;">    
     <input matInput [matDatepicker]="picker" [(ngModel)]="curDate" [max]="maxDate" placeholder="Choose a date" (dateChange)="onChangeEvent($event)" >
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker ></mat-datepicker>
+    <mat-datepicker #picker ></mat-datepicker>    
   </mat-form-field>  
   <div class="clearfix"></div>  
- 
-  
-</h3>
+
+
+</h4>
 
 <button class="btn btn-primary float-right" (click)="approve(approveSheetList)" >Approve</button>
-<br/><br/><br/>
+<br/>
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead class="headerstyle">
@@ -22,53 +30,32 @@
         <th>Task</th>
         <th>Description</th>
         <th>Hours</th>  
-       
+        <th>Status</th> 
       </tr>
     </thead>
     <tbody>      
 
-      <tr *ngFor="let list of approveSheetList">                  
-<!-- <td><input type="checkbox" value="Select All"   [value]="list.id" [(ngModel)]="selectAllItems" (change)="selectAllLineItem($event)"></td> -->
+      <tr *ngFor="let list of approveSheetList">  
 <td><input  type="checkbox"  [checked]="list.selected"  [disabled]="list.status == 'Approved'"   value="{{list.id}}" (change)="onCheckboxChange($event)"/></td>
 
-
-
         <td>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="list.task"
-            (keyup)="refresh.next()"
-            [disabled]="true"
-          />
+          <span > {{list.task}} </span>
         </td>
-        <td>  <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="list.description"
-          (keyup)="refresh.next()"
-          [disabled]="true"
-        /></td>
-        <td><input
-          type="text"
-          class="form-control"
-          [(ngModel)]="list.hours"
-          (keyup)="refresh.next()"
-          [disabled]="true"
-        />
-        </td>       
+        <td>  
+        <span > {{list.description}} </span>
+      </td>
+        <td>
+        <span > {{list.hours}} </span>
+        </td>   
+        <td>
+          <span > {{list.status}} </span>
+        </td>    
       </tr>      
     </tbody>    
   </table>
 </div>
 <div>
-    <!-- <div>
-        <button type="submit" value="Submit" class="btn btn-primary active" style="margin-left: 50px;" (click)="checkAll()">Select All</button> 
-              
-        <button type="submit" value="Submit" class="btn btn-danger" style="margin-right: 5px;" (click)="uncheckAll()">Deselect All</button>
-      
-      </div> -->
-
+   
       <div style="float: right;">
         <button type="submit" value="Submit" class="btn btn-primary active" style="margin-left: 50px;" (click)="checkAll()">Select All</button> 
         <div class="space">

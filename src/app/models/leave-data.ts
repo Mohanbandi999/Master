@@ -1,5 +1,6 @@
 export class leaveinfo {        
-    id?: any;
+    
+    uniqueid?: any;
     leavetype?: string;
     leavereason?: string;
      datefrom?: Date;

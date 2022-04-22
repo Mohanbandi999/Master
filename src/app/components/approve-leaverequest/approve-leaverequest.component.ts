@@ -8,6 +8,7 @@ import { id } from 'date-fns/locale';
 import { MatTableDataSource } from '@angular/material/table';
 
 
+
 @Component({
   selector: 'app-approve-leaverequest',
   templateUrl: './approve-leaverequest.component.html',
@@ -40,11 +41,15 @@ export class ApproveLeaverequestComponent implements OnInit {
   }   
   
   fetchData() {
+    
     this.leaveService.getLeaveList().subscribe(data => { 
-
-      var selectedData= data.filter( (record) => {  
+      
+      var selectedData= data.filter( (record) => { 
+        console.log(record.payload.doc.get("datefrom")); 
         //return this.convert(record.payload.doc.get("datefrom").toDate()) == this.convert("Thu Apr 14 2022 12:30:00 GMT+0530 (India Standard Time)");  
-       return this.convert(record.payload.doc.get("datefrom").toDate()) == this.convert(this.selectedDate);
+       return record.payload.doc.get("datefrom") == this.convert(this.selectedDate);
+       
+
      //return this.convert(record.payload.doc.get("datefrom").toDate()) == this.convert(this.selectedDate) && localStorage.getItem('logProject') == record.payload.doc.get("project") && localStorage.getItem('currentUser') != record.payload.doc.get("userId"); 
 
       })
@@ -54,8 +59,8 @@ export class ApproveLeaverequestComponent implements OnInit {
           id: e.payload.doc.id,      
           leavetype:e.payload.doc.get("leavetype"),
           leavereason:e.payload.doc.get("leavereason"),
-          datefrom:e.payload.doc.get("datefrom").toDate(),
-          dateto:e.payload.doc.get("dateto").toDate(), 
+          datefrom:e.payload.doc.get("datefrom"),
+          dateto:e.payload.doc.get("dateto"), 
           userId:e.payload.doc.get("userId"),   
           status:e.payload.doc.get("status"),      
         } as leaveinfo;     

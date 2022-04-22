@@ -38,8 +38,10 @@ export class ApplyleaveComponent implements OnInit {
        datefrom:new FormControl('', Validators.required),
        dateto:new FormControl('',Validators.required),
        days:new FormControl('',[ Validators.required,Validators.max(8)]),
-       id:new FormControl(localStorage.getItem('currentUser')),
+       userId:new FormControl(localStorage.getItem('currentUser')),
        status: new FormControl('pending'),
+       project:new FormControl(localStorage.getItem('logProject')),
+
          
   })
 

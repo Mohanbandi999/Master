@@ -6,5 +6,6 @@ export class timesheetInfo {
     userId?: any;  
     hours?:string;
     status?: any ;
-    project?:any;  
+    project?:any;
+    userName?:any;  
   }
