@@ -57,13 +57,8 @@ export class LeavesListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.customerArray=  [];
-
-    console.log("testinglll")
-    console.log(this.customerArray)
+    this.customerArray=  [];   
     this.getleaves();
-    console.log("testinglll")
-    console.log(this.customerArray);
     this.lastuser();
 
   }
@@ -77,13 +72,11 @@ export class LeavesListComponent implements OnInit {
       this.leaveservice.getleaves().subscribe(res=>{      
       for(var i=0;i<res.length;i++)
       {       
-        if(localStorage.getItem('currentUser')==res[i].id){
+        if(localStorage.getItem('currentUser')==res[i].userId){
           console.log(res[i]); 
           this.customerArray.push(res[i]);     
         }}                                      
-          this.dataleave =new MatTableDataSource(this.customerArray);
-          //console.log(this.dataleave.data);
-         // this.customerArray=this.dataleave.data;
+          this.dataleave =new MatTableDataSource(this.customerArray);          
     })
    }
 

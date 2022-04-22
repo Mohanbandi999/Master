@@ -1,5 +1,5 @@
 export class leaveinfo {        
-    
+   id?: any;
     uniqueid?: any;
     leavetype?: string;
     leavereason?: string;
@@ -8,4 +8,5 @@ export class leaveinfo {
      status?:any;  
      userId?:any;
      days?:number;
+     userName?:any;     
    }

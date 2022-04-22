@@ -1,24 +1,28 @@
 
 
-<h2>Approve Leave</h2>
+<h3>Approve Leave</h3>
 
-<h3 style="color:blue;">   
-  <!-- <button class="btn btn-primary float-right"  >Date Picker:<input type="date" name="myDate" (change)="selectDate()" ></button> -->
-  <mat-form-field style="float: right;">
+<h4 style="color:blue;">   
+  <select style="float: left; margin-top: 34px; width: 220px;"  formControlName="userName" (change)="changeUser($event)" aria-placeholder="select">    
+    <option [ngValue]="undefined" selected disabled="disabled">Select User</option>
+    <option *ngFor="let user of approveDropSheetList" [ngValue]="user.userId">   
+      {{ user.userName }}
+    </option>
+  </select>
+  <select style="float: right; margin-top: 34px; width: 220px;"  formControlName="statusName" (change)="changeStatus($event)" aria-placeholder="select">    
+    <option [ngValue]="undefined" selected disabled="disabled">Select status</option>
+    <option  value="pending"> Pending  </option>
+    <option  value="Approved"> Approved </option>
+    <option  value="Reject"> Reject </option>
+  </select>
+  <!-- <mat-form-field style="float: right;">
     <input matInput [matDatepicker]="picker" [(ngModel)]="curDate"  placeholder="Choose a date" (dateChange)="onChangeEvent($event)" >
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker ></mat-datepicker>
-  </mat-form-field>  
-  <div class="clearfix"></div>  
-
-    
+  </mat-form-field>   -->
+  <div class="clearfix"></div>      
   
-
- 
-
- 
-  
-</h3>
+</h4>
 <button class="btn btn-primary float-right" (click)="approve(approveSheetList)" >Approve</button>
 <br/><br/><br/>
 <div class="table-responsive">
@@ -29,7 +33,8 @@
         <th>Leave Type</th>
         <th>Leave reason</th>
         <th>Date From</th>  
-        <th>Date To</th>        
+        <th>Date To</th> 
+        <th>Status</th>       
       </tr>
     </thead>
     <tbody>      
@@ -40,41 +45,19 @@
 
 
 
-        <td>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="list.leavetype"
-            (keyup)="refresh.next()"
-            [disabled]="true"
-          />
+        <td>          
+          <span>{{list.leavetype}}</span>
         </td>
-        <td>  <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="list.leavereason"
-          (keyup)="refresh.next()"
-          [disabled]="true"
-        /></td>
-        <td><input
-          type="text"
-          class="form-control"
-          [(ngModel)]="list.datefrom"
-         
-          (keyup)="refresh.next()"
-          [disabled]="true"
-        />
+        <td>  <span>{{list.leavereason}}</span>
+      </td>
+        <td> <span>{{list.datefrom}}</span>
         </td>  
-        <td><input
-            type="text"
-            class="form-control"
-            [(ngModel)]="list.dateto"
-            (keyup)="refresh.next()"
-            [disabled]="true"           
-          
-           
-          />
-          </td>        
+        <td>
+          <span>{{list.dateto}}</span>
+          </td>   
+          <td>
+            <span> {{list.status}} </span>
+          </td>     
       </tr>      
     </tbody>    
   </table>

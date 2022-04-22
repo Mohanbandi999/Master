@@ -41,6 +41,7 @@ export class ApplyleaveComponent implements OnInit {
        userId:new FormControl(localStorage.getItem('currentUser')),
        status: new FormControl('pending'),
        project:new FormControl(localStorage.getItem('logProject')),
+       userName:new FormControl(localStorage.getItem('logName')),
 
          
   })
@@ -75,13 +76,8 @@ export class ApplyleaveComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.customerArray=  [];
-
-    console.log("testinglll")
-    console.log(this.customerArray)
-    this.getleaves();
-    console.log("testinglll")
-    console.log(this.customerArray);
+    this.customerArray=  [];    
+    this.getleaves();    
     this.lastuser();
 
   }

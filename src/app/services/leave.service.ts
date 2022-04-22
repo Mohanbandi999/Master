@@ -33,13 +33,10 @@ export class LeaveService {
 
 
   getLeaveList() {  
-    //alert("serv");
     return this.firestore.collection('leaves').snapshotChanges();
 }
 
 saveupdateSheetList(leaveInfo: leaveinfo){   
-    this.firestore.doc('leaves/'+leaveInfo.uniqueid).update(leaveInfo);
-  alert("Updated Successfully")
- // }     
+    this.firestore.doc('leaves/'+leaveInfo.id).update(leaveInfo);    
  }
 }
