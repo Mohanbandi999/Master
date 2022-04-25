@@ -12,7 +12,7 @@ import { getDatabase ,ref,query, orderByChild} from "firebase/database";
 import { Console, timeStamp } from 'console';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import{ init } from '@emailjs/browser';
-init("CJY_uHzLjfzpR6lC6");
+init("SNm7W6md56lp2icOl");
 
 //import {FirebaseListObservable} from '@angular/fire/compat/database'
 
@@ -139,7 +139,7 @@ export class AuthenticationService {
         userpassword: password       
     };
      
-    emailjs.send('service_62hd31e', 'template_softblobs_mail', templateParams)
+    emailjs.send("service_hc59es3","template_s6fg2pz", templateParams)
         .then(function(response) {
            console.log('SUCCESS!', response.status, response.text);
         }, function(error) {
